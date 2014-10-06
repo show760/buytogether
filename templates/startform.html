@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>發起團購</title>
+{% if status == true and string %}
+    <script language="JavaScript">
+        alert('{{string}}')
+        window.location.replace('/index')
+    </script>
+{% elseif status == false and string %}
+    <script language="JavaScript">
+        alert('{{string}}')
+        window.location.replace('/buy/start')
+    </script>
+{% endif %}
+</head>
+<body background="/_images/wrapper-bg.jpg">
+<table align='center' border='0' width="1000">
+	<div>{{ include('top.html') }}</div>
+	<div>{{ include('bt.html') }}</div>
+</table>
+<br />
+	<form name="start" method="POST" enctype="multipart/form-data" action="/buy/start">
+		<table border=0  align = "center"style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 630px; border: 0px solid #624d48; text-align:left; '>
+			<tr bgcolor= '#91C7FF'>
+				<td align='left' >
+					團購名稱：<input type="text" name="info[name]" width="20" />
+				</td>
+				<td align='left'>
+					上傳團購圖片：<input type="file" name="file" size="50">
+				</td>
+			</tr>
+			<tr bgcolor= '#91C7FF' >
+				<td align='left'>
+					團購人數：<input type="text" name="info[quantity]" width="20" value={{qua}} >
+				</td>
+				<td align='center'>
+					<a href='{$_SERVER['PHP_SELF']}?op=conps_list&from=start'>決策小工具</a>
+				</td>
+			</tr>
+			<tr bgcolor= '#91C7FF'>
+				<td align='left'>
+					團購價格：<input type="text" name="info[price]" width="20" />
+				</td>
+				<td align='left'>
+					商品原價：<input type="text" name="info[oprice]" size="20">
+				</td>
+			</tr>
+			<tr bgcolor= '#91C7FF'>
+				<td align='left'>
+					團購類型：
+					<select size='1' name='info[class]'>
+						<option value='gooduse' selected>找好用
+						<option value='goodfun'>找好玩
+						<option value='goodeat'>找好吃
+					</select>
+				</td>
+				<td align='left'>
+					團購地區：<input type="text" name="info[area]" size="20">
+				</td>
+			</tr>
+			<tr bgcolor= '#91C7FF'>
+				<td  colspan='2' align='center'>
+					團購簡介：<br>
+						 <textarea name="info[com]" rows="5" cols="45">團購的簡介：顯示在團購列表中的標題，簡短的介紹</textarea><br>
+					團購詳細介紹：<br>
+					<textarea name="info[det]" rows="10" cols="45"></textarea></td></tr>
+			<tr bgcolor= '#CCBBFF'>
+				<td colspan='2' align='center'>
+					<font size='4' color='EE0000' face='微軟正黑體'>
+						<B>限制條件 &nbsp; (不設限以下欄位可跳過)</B>
+					</font><BR>
+					跑團次數小於：<input type="text" name="info[conrun]" size="5">次<BR>
+					參加團購次數至少：<input type="text" name="info[conjoin]" size="5">次
+				</td>
+			</tr>	
+			<tr bgcolor= '#FFAABB'>
+				<td colspan='2'align='center'>付款方式：
+					<select size='1' name='info[methor]'>
+						<option value='facetoface' selected>面交
+						<option value='remittance'>郵局匯款
+					</select>
+					<br>
+					<font size='4' color='EE0000' face='微軟正黑體'>
+						<B>下列選項付款為郵局匯款才需填寫：</B>
+					</font>
+					<br>
+					受款人姓名：<input type="text" name="info[gname]" size="8" />
+					<br>
+				</td>
+			<tr bgcolor= '#FFAABB'>
+				<td colspan='2'align='center'>
+					郵局帳號：<br>
+					<font size='4' color='EE0000' face='微軟正黑體'>
+						<B>如：131416-8-123456-7</B>
+					</font>
+					<br>
+					<input type="text" name="info[gacc]" size="30" maxlength="20" />
+				</td>
+			</tr>		
+			<tr bgcolor= '#FFAABB'>
+				<td  colspan='2' align='center'>
+					<input type='hidden' name='info[owner]' value='{{user}}'>
+					<INPUT TYPE="SUBMIT" VALUE="發起團購">
+					<INPUT TYPE="RESET" VALUE="重新輸入">
+				</td>
+			</tr>
+		</table>
+	</form>
+<br />
+<hr width="1000">
+<br />
+<br />
+</body>
+</html>

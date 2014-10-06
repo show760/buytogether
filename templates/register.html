@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Buytogether</title>
+{% if status == true and user %}
+    <script language="JavaScript">
+        alert('{{string}}')
+        window.location.replace('/index')
+    </script>
+{% elseif status == false and string %}
+    <script language="JavaScript">
+        alert('{{string}}')
+        window.location.replace('/user/register')
+    </script>
+{% endif %}
+</head>
+<body background="/_images/wrapper-bg.jpg">
+<table align='center' border='0' width="1000">
+<div>{{ include('top.html') }}</div>
+</table>
+<table border="2" align="center" bordercolor="#6666FF" >
+		<form method="POST" action="/user/register">
+			<tr bgcolor="99FF99">
+				<td align="right">
+					會員信箱：
+				</td>
+				<td align="left">
+					<input type="text" name="info[email]">
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					會員暱稱：
+				</td>
+				<td align="left">
+					<input type="text" name="info[name]">
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					密碼：
+				</td>
+				<td align="left">
+					<input type="password" name="info[pass1]">
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					密碼確認：
+				</td>
+				<td align="left">
+					<input type="password" name="info[pass2]">
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					生日：
+				</td>
+				<td align="left">
+					<input type="text" name="info[birth]">
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					會員住址：
+				</td>
+				<td align="left">
+					<input type="text" name="info[address]">
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					所在地區：
+				</td>
+				<td align="left">
+					<input type="text" name="info[counties]">
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="center" colspan="2">
+					<input type="submit" value="註冊會員">
+				</td>
+			</tr>
+		</form>
+	</table>
+</body>
+</html>

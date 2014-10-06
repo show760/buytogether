@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>團購資料</title>
+</head>
+<body background="/_images/wrapper-bg.jpg">
+<table align='center' border='0' width="1000">
+     <div>{{ include('top.html') }}</div>
+     <div>{{ include('bt.html') }}</div>
+</table>
+{% if buy %}
+<form  action='/joinbt' enctype="multipart/form-data" method='POST'>
+    <table align="center" style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 700px; border: 0px solid #624d48; text-align:left; '>
+    <tr>
+        <td align='center'>
+            <font size='6'><B>{{buy.name}}</B></font>
+        </td>
+    </tr>
+    <tr>
+        <td align='center'>
+            <img border="1" height="300" width="300" src='/images/{{buy.token}}' >
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <font size="4"><B></B>付款方式：{% if buy.methor == 'facetoface' %}面交{% else %}郵局匯款{% endif %}</font>
+        </td>
+    </tr>
+    <tr>
+        <td align='center'>
+            <font size='4'><B>價錢：<font color='FF0000' >$ {{buy.price}}</font></B></font>
+        </td>
+    </tr>
+    <tr>
+        <td align='center'>
+            <font size='4'><B>尚有：<font color='FF0000'>{{ buy.quantity - buy.num }}份</font></B></font>
+        </td>
+    </tr>
+    <tr>
+        <td align='center'>
+            <font size='4'><B>請填入購買數量:</B></font>
+            <input type='text' name='quantity' size='5'>
+        </td>
+    </tr>
+    <tr>
+        <td align='center'>
+            <font size='4' color='EE0000'><B>注意！按下送出後即送出訂單，請確認購買數量</B></font>
+        </td>
+    </tr>
+    <tr>
+        <td align='center'>
+            <font size='3'><B>(請確認身份：<font color='FF9900'>gogomango</font>)</B></font>
+        </td>
+    </tr>
+    <tr>
+        <td align='center'>
+            <input type='hidden' name='pid' value='{{buy.token}}'> 
+            <font size='4'><input type='submit' value='送出'></font>
+        </td>
+    </tr>
+</table>
+</form>
+{% endif %}
+<br />
+<hr width="1000">
+<br />
+<br />
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>會員資料</title>
+{% if status == 1 %}
+	<script language="JavaScript">
+		alert('{{string}}')
+		window.location.replace('/index')
+	</script>
+{% elseif status == 2 or status == 3 or (status == 0 and string) %}
+	<script language="JavaScript">
+		alert('{{string}}')
+		window.location.replace('/user/view/{{token}}')
+	</script>
+{% endif %}
+</head>
+<body background="/_images/wrapper-bg.jpg">
+<table align='center' border='0' width="1000">
+	 <div>{{ include('top.html') }}</div>
+</table>
+{% if status == 0 %}
+<h1 align="center">會員資料</h1>
+
+	<table border="2" align="center" bordercolor="#6666FF" >
+		<form method="POST" action="/user/view/{{user.token}}">
+			<tr bgcolor="99FF99">
+				<td align="right">
+					會員信箱：
+				</td>
+				<td align="left">
+					{{user.email}}
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					會員暱稱：
+				</td>
+				<td align="left">
+					<input type="text" name="info[name]" value="{{user.name}}">
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					新密碼：
+				</td>
+				<td align="left">
+					<input type="password" name="info[pass1]" size="20">
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					新密碼確認：
+				</td>
+				<td align="left">
+					<input type="password" name="info[pass2]" size="20">
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					會員生日：
+				</td>
+				<td align="left">
+					<input type="text" name="info[birth]" value="{{user.birth}}">
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					會員權限：
+				</td>
+				<td align="left">
+					{{user.power}}
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					會員住址：
+				</td>
+				<td align="left">
+					<input type="text" name="info[address]" value="{{user.address}}">
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					所在地區：
+				</td>
+				<td align="left">
+					<input type="text" name="info[counties]" value="{{user.counties}}">
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					跑團次數：
+				</td>
+			<td align="left">
+					{{user.run}}
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					參與團購次數：
+				</td>
+				<td align="left">
+					{{user.join}}
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					揪團次數：
+				</td>
+				<td align="left">
+					{{user.main}}
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="right">
+					請輸入密碼以進行修改：
+				</td>
+				<td align="left">
+					<input type="password" name="info[validpass]" size="20">
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align="center" colspan="2">
+					<input type="submit" value="修改資料">
+				</td>
+			</tr>
+		</form>
+	</table>
+{% endif %}
+<br />
+<hr width="1000">
+<br />
+<br />
+</body>
+</html>

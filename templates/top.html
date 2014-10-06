@@ -1,0 +1,41 @@
+	<tr>
+		<td align="center"  colspan="2" >
+			<div align="center">
+				<a href="/">
+					<img src="/_images/logo.png" width="800" style=" filter:alpha(opacity=70); opacity:.70; "/>
+				</a>
+			</div> 
+		</td>
+{% if user %}
+	<tr>
+		<td align="left">
+			<div>
+				<a href="{$_SERVER['PHP_SELF']}?op=eoq">
+					<img src='/_images/tool.png' width='100'></a>
+				<a href="/buy/start">
+					<img src='/_images/start.png' width='100'></a>
+				<a href="{$_SERVER['PHP_SELF']}?op=my_list">
+					<img src='/_images/my.png' width='100'></a>
+				<a href="/user/userlist">
+					<img src='/_images/manage.png' width='100'></a>
+			</div>
+		</td>
+		<td align="right">
+			<div class="log">
+				<a href="/user/logout">
+					<img src="/_images/logout.png" width="80" border="0"></a>	
+			</div>
+		</td>
+{% else %}
+	<tr>
+		<td align="left">
+		</td>
+		<td align="right">
+			<div class="log">
+			 	<a href="/user/register">
+			 		<img src="/_images/register.png" width="80" border="0"></a>
+				<a href="/user/login">
+					<img src="/_images/login.png" width="80" border="0"></a>	
+			</div>
+		</td>
+{% endif %}

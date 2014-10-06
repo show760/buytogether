@@ -1,0 +1,9 @@
+vendor
+composer.phar
+pux/compiled.php
+docs
+route/compiled.php
+.project
+.buildpath
+/.settings
+_group

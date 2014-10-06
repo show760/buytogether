@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Buytogether</title>
+{% if status == true and string %}
+    <script language="JavaScript">
+        alert('{{string}}')
+        window.location.replace('/index')
+    </script>
+{% elseif status == false and string %}
+    <script language="JavaScript">
+        alert('{{string}}')
+        window.location.replace('/user/login')
+    </script>
+{% endif %}
+</head>
+<body background="/_images/wrapper-bg.jpg">
+<table align='center' border='0' width="1000">
+<div>{{ include('top.html') }}</div>
+</table>
+<hr>
+<table align="center">
+	<form action="/user/login" method="POST">
+		<tr>
+			<td>
+				信箱：
+			</td>
+			<td>
+				<input type="text" name="email" size="20">
+			</td>
+		<tr>
+			<td>
+				密碼：
+			</td>
+			<td>
+				<input type="password" name="pass" size="20">
+			</td>
+		<tr>
+			<td align="center" colspan="2">
+				<input type="submit" name="登入">
+			</td>
+	</form>
+</table>
+</body>
+</html>

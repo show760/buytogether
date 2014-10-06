@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>團購資料</title>
+</head>
+<body background="/_images/wrapper-bg.jpg">
+<table align='center' border='0' width="1000">
+     <div>{{ include('top.html') }}</div>
+     <div>{{ include('bt.html') }}</div>
+</table>
+{% if buy %}
+<form action='{$_SERVER['PHP_SELF']}' method='POST'>
+    <table align='center' style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 700px; border: 0px solid #624d48; text-align:left; '>
+    <tr bgcolor= '#CCBBFF'>
+        <td align='center' colspan='2'>
+            <font size='6'><B> {{buy.name}} </B></font>
+        </td>
+    </tr>
+    <tr>
+        <td align='left' colspan='2'>
+            <font face='微軟正黑體' size='4'>{{buy.com}}</font>
+        </td>
+    </tr>
+    <tr>
+        <td align='center' rowspan='6'>
+            <img width="300" src='/images/{{buy.token}}'>
+        </td>
+    </tr>
+    <tr>
+        <td align='left'>
+            <font size='6' color='EE0000'><B>${{buy.price}}</B></font>
+        </td>
+    </tr>
+    <tr>
+        <td align='left'>
+            <font size='4' color='00AA00'><B>限量:{{buy.quantity}}份</B></font>
+        </td>
+    </tr>
+    <tr>
+        <td align='left'>
+            <font size='4'><B>剩餘數量:<font color='FF0000'> {{buy.quantity - buy.num}}</font>份</B></font>
+        </td>
+    </tr>
+    <tr>
+        <td align='left'>                       
+            <font size='5' color='FF9900'><B>已賣出{{buy.num}}份</B></font>
+        </td>
+    </tr>
+    <tr></tr>
+    <tr bgcolor= '#CCBBFF'>
+        <td align='center' colspan='2'>
+            <font face='微軟正黑體' size='4'><B>團購地區:{{buy.area}}</B></font>
+        </td>
+        <!-- <input type='hidden' name='token' value='{{buy.token}}'> -->
+    </tr>
+</table>
+</form>
+{% else %}
+<h3 align="center">查無該團購,請查看其他團購</h3>
+{% endif %}
+<br />
+<hr width="1000">
+<br />
+<br />
+</body>
+</html>

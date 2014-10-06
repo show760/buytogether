@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Buytogether</title>
+</head>
+<body background="/_images/wrapper-bg.jpg">
+<table align='center' border='0' width="1000">
+<div>{{ include('top.html') }}</div>
+<div>{{ include('bt.html') }}</div>
+	<tr>
+		<td colspan="2">
+{% if buy %}
+			<marquee onMouseOver="this.stop()" onMouseOut="this.start()" scrollamount="10">
+{% for b in buy %}
+			<a href='/buy/view/{{b.token}}'>
+				<img  style="height:150px;width:150px;border-style:solid;border-width:1px;border-color:black;" src='/images/{{b.token}}' >
+			</a>
+{% endfor %}
+			</marquee>
+{% endif %}
+		</td>
+	</tr>
+</table>
+<table align='center' width='1000' style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 1000px; border: 0px solid #624d48; text-align:left; '>
+{% set count = 0 %}
+{% if buy  %}
+{% for b in buy %}
+{% if count % 3 == 0 %}
+	<tr>
+{% endif %}
+{% set count = count + 1 %}
+		<td width='300'>
+			<table align="center" width="300">
+				<tr>
+					<td align="center" colspan="3" height="50">
+						<a style="color:black;" href='/buy/view/{{b.token}}'><font size='5'><B>{{b.name}}{{i}}</B></font></a>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" colspan="3">
+						<a href='/buy/view/{{b.token}}'>
+						<img style="height:300px;width:300px;border-style:solid;border-width:1px;border-color:black;" src='/images/{{b.token}}' ></a>
+					</td>
+				</tr>
+				<tr>
+					<td align='left'>
+						<font size='6' color='EE0000'><B>${{b.price}}</B></font>
+					</td>
+					<td align='center'>
+						<font size='4' color='00AA00'><B>限量:{{b.quantity}}份</B></font>
+					</td>
+					<td align='right'>
+						<font size='4' color='FF9900'><B>賣出:{{b.num}}份</B></font>
+					</td>
+				</tr>
+				<tr>
+					<td align='left'>
+						<font size='4'><strike>${{b.oprice}}</strike></font>
+					</td>
+					<td align="center">
+						<font size="4">{{b.area}}</font>
+					</td>
+					<td align='right'>
+						<a style="color:black;" href='/buy/view/{{b.token}}'><font size="4">{% if b.end == 'open' %}立即加入{% else %}團購資料{% endif %}</font></a>
+					</td>
+				</tr>
+			</table>
+		</td>
+{% endfor %}
+{% elseif search %}
+<table border=0  align = "center" style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 1000px; border: 0px solid #624d48; text-align:left; '>
+			<tr>
+				<td align='center'  style="font-size:24px;">
+					團購分類搜尋
+				</td>
+			</tr>
+			<tr>
+				<td align='center' style="font-size:20px;">
+					付款方式
+				</td>
+			</tr>
+			<tr>
+				<td align='center'>
+					<table bgcolor='#A00200'>
+					<tr>
+						<td style="font-size:14px;"><a href="/?methor=facetoface"><font color='#FFFFFF'>面交</font></a></td>
+						<td style="font-size:14px;"><a href="/?methor=remittance"><font color='#FFFFFF'>匯款</font></a></td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td align='center' style="font-size:20px;">
+					地區
+				</td>
+			</tr>
+			<tr>
+				<td align='center'>
+					<table bgcolor='#A00200'>
+						<tr>
+							<td style="font-size:14px;">
+								<a href="/?area=台北"><font color='#FFFFFF'>台北</font></a>
+							</td>
+							<td style="font-size:14px;">
+								<a href="/?area=新北"><font color='#FFFFFF'>新北</font></a>
+							</td>
+							<td style="font-size:14px;">
+								<a href="/?area=桃園"><font color='#FFFFFF'>桃園</font></a>
+							</td> 
+							<td style="font-size:14px;">
+								<a href="/?area=新竹"><font color='#FFFFFF'>新竹</font></a>
+							</td>
+							<td style="font-size:14px;">
+								<a href="/?area=苗栗"><font color='#FFFFFF'>苗栗</font></a>
+							</td>
+							<td style="font-size:14px;">
+								<a href="/?area=台中"><font color='#FFFFFF'>台中</font></a>
+							</td> 
+							<td style="font-size:14px;">
+								<a href="/?area=彰化"><font color='#FFFFFF'>彰化</font></a>
+							</td>
+							<td style="font-size:14px;">
+								<a href="/?area=南投"><font color='#FFFFFF'>南投</font></a>
+							</td> 
+							<td style="font-size:14px;">
+								<a href="/?area=雲林"><font color='#FFFFFF'>雲林</font></a>
+							</td>
+							<td style="font-size:14px;">
+								<a href="/?area=嘉義"><font color='#FFFFFF'>嘉義</font></a>
+							</td>
+							<td style="font-size:14px;">
+								<a href="/?area=台南"><font color='#FFFFFF'>台南</font></a>
+							</td> 
+							<td style="font-size:14px;">
+								<a href="/?area=高雄"><font color='#FFFFFF'>高雄</font></a>
+							</td>
+							<td style="font-size:14px;">
+								<a href="/?area=屏東"><font color='#FFFFFF'>屏東</font></a>
+							</td>
+							<td style="font-size:14px;">
+								<a href="/?area=宜蘭"><font color='#FFFFFF'>宜蘭</font></a>
+							</td> 
+							<td style="font-size:14px;">
+								<a href="/?area=花蓮"><font color='#FFFFFF'>花蓮</font></a>
+							</td>
+							<td style="font-size:14px;">
+								<a href="/?area=台東"><font color='#FFFFFF'>台東</font></a>
+							</td> 
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td align='center'>
+					<table align='center'>
+							<form name="report" method="GET" enctype="multipart/form-data" action="/">
+						<tr>
+							<td align='center' style="font-size:18px;">
+								進階查詢<br>說明：選擇要查詢的項目，若該項沒有要查詢則不用選擇。
+							</td>	
+						</tr>
+					<tr>
+						<td align='center'>
+							付款方式: 
+								<select size='1' name='methor'>
+								<option value='' selected>---請選擇---
+								<option value='facetoface'>面交
+								<option value='remittance'>匯款
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td align='center'>
+							地區: 
+							<select size='1' name='area'>
+								<option value='' selected>---請選擇---
+								<option value='台北'>台北
+								<option value='新北'>新北
+								<option value='桃園'>桃園
+								<option value='新竹'>新竹
+								<option value='苗栗'>苗栗
+								<option value='台中'>台中
+								<option value='彰化'>彰化
+								<option value='南投'>南投
+								<option value='雲林'>雲林
+								<option value='嘉義'>嘉義
+								<option value='台南'>台南
+								<option value='高雄'>高雄
+								<option value='屏東'>屏東
+								<option value='宜蘭'>宜蘭
+								<option value='花蓮'>花蓮
+								<option value='台東'>台東
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td align='center'>
+							團購分類: 
+							<select size='1' name='class'>
+								<option value='' selected>---請選擇---
+								<option value='goodeat'>找好吃
+								<option value='goodfun'>找好玩
+								<option value='gooduse'>找好用
+							</select>
+						</td>
+					</tr>
+					<tr> 
+						<td  align="CENTER"> 
+							<input type="submit" value="查詢">
+						</td>
+					</tr>
+						</form>
+					</table>
+				</td>
+			</tr>
+		</table>
+{% else %}
+	<tr>
+		<td align="center">
+			<h3>該查詢項目中沒有團購資料，請重新查詢</h3>
+		</td>
+	<tr>
+		<td align="center">
+			<a href="/?search=ture">重新查詢</a>
+		</td>	
+{% endif %}
+	</tr>
+</table>
+<br />
+<hr width="1000">
+<br />
+<br />
+
+</body>
+</html>

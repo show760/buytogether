@@ -24,7 +24,7 @@
     </tr>
     <tr>
         <td align='center' rowspan='6'>
-            <img width="300" src='/images/{{buy.token}}'>
+            <img border="1" width="300" height="300" src='/images/{{buy.token}}'>
         </td>
     </tr>
     <tr>
@@ -53,7 +53,7 @@
             <font face='微軟正黑體' size='4'><B>團購地區:{{buy.area}}</B></font>
         </td>
     </tr>
-{% if buy.conrun != 0 or buy.conjoin != 0 %}    
+{% if buy.conrun != 0 or buy.conjoin != 0 %} 
     <tr>
         <td align="center" colspan="2">
             <font color="red"><B>團購限制條件</B></font>
@@ -84,6 +84,34 @@
     </tr>
     {% endif %}
 {% endif %}
+{% if user %}
+    <tr>
+        <td align='center' colspan='2'>
+            <a href="/buy/join/{{buy.token}}">加入團購</a>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td align='center' colspan='2'>
+            <a href="/user/login">請先登入</a>
+        </td>
+    </tr>
+{% endif %}
+    <tr bgcolor="#CCBBFF">
+        <td align="center" colspan="2">
+            <font size="4"><B>付款方式：{% if buy.methor == 'facetoface' %}面交{% else %}郵局匯款{% endif %}</B></font>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <font size="4">{{buy.det}}</font>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" colspan="2">
+            <font size="4"><a href="/">回首頁</a></font>
+        </td>
+    </tr>
 </table>
 </form>
 {% else %}

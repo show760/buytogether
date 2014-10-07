@@ -23,7 +23,17 @@ CREATE TABLE `buy` (
   `buy_Gname` varchar(30) DEFAULT NULL,
   `buy_Gacc` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`buy_Id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `join`;
+CREATE TABLE `join` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `img`;

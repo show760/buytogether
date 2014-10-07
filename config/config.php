@@ -25,11 +25,16 @@ return array(
 
     'upload_group' => array(
         'dir' => BASE_DIR . '/_group',
-        'prefix' => 'ul_'
+        'prefix' => 'gr_'
     ),
 
     'upload_user' => array(
         'dir' => BASE_DIR . '/_member',
-        'prefix' => 'ul_'
+        'prefix' => 'ph_'
+    ),
+
+    'upload_join' => array(
+        'dir' => BASE_DIR . '/_join',
+        'prefix' => 'jo_'
     )
 );

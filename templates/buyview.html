@@ -52,8 +52,38 @@
         <td align='center' colspan='2'>
             <font face='微軟正黑體' size='4'><B>團購地區:{{buy.area}}</B></font>
         </td>
-        <!-- <input type='hidden' name='token' value='{{buy.token}}'> -->
     </tr>
+{% if buy.conrun != 0 or buy.conjoin != 0 %}    
+    <tr>
+        <td align="center" colspan="2">
+            <font color="red"><B>團購限制條件</B></font>
+        </td>
+    </tr>
+    {% if buy.conrun != 0 %}
+    <tr>
+        <td align="center">
+            跑團次數小於<font color="red"><B>{{buy.conrun}}</B></font>次
+        </td>
+        {% if user %}
+        <td align="left">
+            您跑團次數為{{userRun}}次
+        </td>
+        {% endif %}
+    </tr>
+    {% endif %}
+    {% if buy.conjoin != 0 %}
+    <tr>
+        <td align="center">
+            參加團購次數至少<font color="red"><B>{{buy.conjoin}}</B></font>次
+        </td>
+        {% if user %}
+        <td align="left">
+            您參加團購次數為{{userJoin}}次
+        </td>
+        {% endif %}
+    </tr>
+    {% endif %}
+{% endif %}
 </table>
 </form>
 {% else %}

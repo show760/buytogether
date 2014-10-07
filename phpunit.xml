@@ -9,6 +9,8 @@
 <testsuites>
   <testsuite name="Model">
     <file>test/BuyTogetherTest/Model/BuyTest.php</file>
+    <file>test/BuyTogetherTest/Model/ImgTest.php</file>
+    <file>test/BuyTogetherTest/Model/BuyImgTest.php</file>
     <file>test/BuyTogetherTest/Model/UserTest.php</file>
   </testsuite>
 </testsuites>

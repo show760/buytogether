@@ -3,7 +3,8 @@ namespace BuyTogether\Controller;
 
 use Fruit\Seed;
 use BuyTogether\Model\User;
-
+use BuyTogether\Model\Img;
+use BuyTogether\Model\UserImg;
 use Fruit\Session\PhpSession;
 
 class UserController extends Seed
@@ -120,9 +121,17 @@ class UserController extends Seed
                 } else {
                     $user = User::create($info);
                     if ($user instanceof User) {
+                        if ($_FILES["file"]["tmp_name"]) {
+                            $img = Img::create($_FILES["file"]["tmp_name"], 'upload_user');
+                            $userimg = UserImg::create($user, $img);
+                        }
                         $session = new PhpSession;
                         $session->set('user', $user->getToken());
-                        $msg = array( 'status' => true, 'string' => '註冊會員成功', 'user' => $session->get('token'));
+                        $msg = array(
+                            'status' => true,
+                            'string' => '註冊會員成功',
+                            'user' => $session->get('token')
+                        );
                     } else {
                         $msg = array( 'status' => false, 'Unknown error. please try again.');
                     }
@@ -179,5 +188,23 @@ class UserController extends Seed
             $msg = array( 'status' => false, 'string' => '登出失敗請稍後再試');
             return self::getConfig()->getTmpl()->render('logout.html', $msg);
         }
+    }
+
+    public function showUserImg($token = null)
+    {
+        $userimg = UserImg::loadByUid($token);
+        $gid = $userimg->getGid();
+        $img = Img::load($gid);
+        if (!$img instanceof Img) {
+            return json_encode(
+                array(
+                    'status' => false,
+                    'msg'    => '查無照片'
+                )
+            );
+        }
+
+        header('Content-Type: '.$img->getMime());
+        $img->readFile();
     }
 }

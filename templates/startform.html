@@ -8,6 +8,11 @@
         alert('{{string}}')
         window.location.replace('/index')
     </script>
+{% elseif status == false and string == '請先登入' %}
+	<script language="JavaScript">
+        alert('{{string}}')
+        window.location.replace('/user/login')
+    </script>
 {% elseif status == false and string %}
     <script language="JavaScript">
         alert('{{string}}')

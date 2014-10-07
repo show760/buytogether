@@ -7,3 +7,5 @@ route/compiled.php
 .buildpath
 /.settings
 _group
+_member
+test/test_group

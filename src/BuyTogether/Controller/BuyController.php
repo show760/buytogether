@@ -6,6 +6,8 @@ use Fruit\Model;
 use Fruit\Session\PhpSession;
 use BuyTogether\Model\Buy;
 use BuyTogether\Model\User;
+use BuyTogether\Model\Img;
+use BuyTogether\Model\BuyImg;
 
 class BuyController extends Seed
 {
@@ -36,15 +38,28 @@ class BuyController extends Seed
 
     public function view($b)
     {
+        $session = new PhpSession;
         $msg = array();
         $msg['buy'] = Buy::view($b);
+        if ($session->get('user')) {
+            $msg['user'] = $session->get('user');
+            $user = User::load($session->get('user'));
+            $msg['userRun'] = $user->getRun();
+            $msg['userJoin'] = $user->getJoin();
+        }
         return self::getConfig()->getTmpl()->render('buyview.html', $msg);
     }
 
     public function join($b)
     {
+        $session = new PhpSession;
         $msg = array();
         $msg['buy'] = Buy::view($b);
+        if ($session->get('user')) {
+            $msg['user'] = $session->get('user');
+            $user = User::load($session->get('user'));
+            $msg['useremail'] = $user->getEmail();
+        }
         return self::getConfig()->getTmpl()->render('join.html', $msg);
     }
 
@@ -53,17 +68,25 @@ class BuyController extends Seed
         $session = new PhpSession;
         if (!$_POST['info']) {
             $user = User::load($session->get('user'));
-            $msg['user'] =  $user->getEmail();
+            if ($user instanceof User) {
+                $msg['user'] =  $user->getEmail();
+            } else {
+                $msg = array( 'status' => false, 'string' => '請先登入');
+            }
             return self::getConfig()->getTmpl()->render('startform.html', $msg);
         } else {
             if ($_FILES["file"]["error"] > 0) {
                 $op = '1';
             } else {
                 $info = $_POST['info'];
-                $buy = Buy::create($info, $_FILES["file"]["tmp_name"]);
-                if ($buy instanceof Buy) {
-                    $msg = array( 'status' => true, 'string' => '新增團購成功');
-                    return self::getConfig()->getTmpl()->render('startform.html', $msg);
+                $buy = Buy::create($info);
+                $img = Img::create($_FILES["file"]["tmp_name"], 'upload_group');
+                if ($buy instanceof Buy and $img instanceof Img) {
+                    $buyimg = BuyImg::create($buy, $img);
+                    if ($buyimg instanceof Buyimg) {
+                        $msg = array( 'status' => true, 'string' => '新增團購成功');
+                        return self::getConfig()->getTmpl()->render('startform.html', $msg);
+                    }
                 } else {
                     $op = '2';
                 }
@@ -133,7 +156,7 @@ class BuyController extends Seed
                 case '2':
                     $msg = array(
                         'status' => false,
-                        'string' => "File type isn't image"
+                        'string' => "輸入資料有誤,請進行確認"
                     );
                     return self::getConfig()->getTmpl()->render('startform.html', $msg);
                     break;
@@ -151,13 +174,15 @@ class BuyController extends Seed
     /**
      * 用photoToken取得image
      *
-     * @param  mixed token $photo_token
+     * @param  mixed buy token $token
      * @return image or null
      */
-    public function showImg($img_token = null)
+    public function showImg($token = null)
     {
-        $buy = Buy::load($img_token);
-        if (!$buy instanceof Buy) {
+        $buyimg = BuyImg::loadByBid($token);
+        $gid = $buyimg->getGid();
+        $img = Img::load($gid);
+        if (!$img instanceof Img) {
             return json_encode(
                 array(
                     'status' => false,
@@ -166,7 +191,7 @@ class BuyController extends Seed
             );
         }
 
-        header('Content-Type: '.$buy->getMime());
-        $buy->readFile();
+        header('Content-Type: '.$img->getMime());
+        $img->readFile();
     }
 }

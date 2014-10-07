@@ -5,32 +5,14 @@ use DateTime;
 use PHPUnit_Extensions_Database_TestCase;
 use BuyTogetherTest\DataSet;
 use BuyTogetherTest\Tool;
+use BuyTogether\Model\Img;
 use BuyTogether\Model\Buy;
+use BuyTogether\Model\BuyImg;
 
-class BuyTest extends PHPUnit_Extensions_Database_TestCase
+class BuyimgTest extends PHPUnit_Extensions_Database_TestCase
 {
-
-    private $info;
-
-    public function __construct()
-    {
-        $this->info = array(
-            'name' => 'googeat',
-            'price' => 300,
-            'oprice' => 400,
-            'com' => 'com',
-            'det' => 'det',
-            'owner' => 'owner',
-            'class' => 'gooduse',
-            'area' => '台北',
-            'quantity' => 123,
-            'conrun' => 0,
-            'conjoin' => 0,
-            'methor' => 'facetoface',
-            'gname' => '',
-            'gacc' => ''
-        );
-    }
+    const FN = 'test.jpg';
+    const FN2 = 'test2.jpg';
 
     public function getConnection()
     {
@@ -42,6 +24,20 @@ class BuyTest extends PHPUnit_Extensions_Database_TestCase
         $d = new DateTime();
         return new DataSet(
             [
+                'img' => [
+                    [
+                        'path' => self::FN,
+                        'mime' => 'image/jpeg',
+                        'location' => 'upload',
+                        'time' => $d->format('Y-m-d H:i:s')
+                    ],
+                    [
+                        'path' => self::FN2,
+                        'mime' => 'image/jpeg',
+                        'location' => 'upload',
+                        'time' => $d->format('Y-m-d H:i:s')
+                    ]
+                ],
                 'buy' => [
                     [
                         'buy_Id' => 1,
@@ -62,37 +58,33 @@ class BuyTest extends PHPUnit_Extensions_Database_TestCase
                         'buy_Methor' => 'facetoface',
                         'buy_Gname' => 'test gname',
                         'buy_Gacc' => 'test gacc'
-                    ]
-                ]
-            ]
-        );
-    }
-
-    public function getUpdatedDataSet()
-    {
-        $d = new DateTime();
-        return new DataSet(
-            [
-                'buy' => [
+                    ],
                     [
-                        'buy_Id' => 1,
+                        'buy_Id' => 2,
                         'buy_Time' => $d->format('Y-m-d H:i:s'),
                         'buy_Name' => 'test name',
-                        'buy_Price' => 300,
-                        'buy_Oprice' => 400,
+                        'buy_Price' => 150,
+                        'buy_Oprice' => 300,
                         'buy_Com' => 'test com',
                         'buy_Det' => 'test det',
                         'buy_Owner' => 'test owner',
                         'buy_Class' => 'goodeat',
                         'buy_Area' => '台中',
                         'buy_End' => 'open',
-                        'buy_Q' => 100,
-                        'buy_Num' => 10,
+                        'buy_Q' => 300,
+                        'buy_Num' => 0,
                         'buy_ConRun' => 0,
                         'buy_ConJoin' => 0,
                         'buy_Methor' => 'facetoface',
                         'buy_Gname' => 'test gname',
                         'buy_Gacc' => 'test gacc'
+                    ]
+                ],
+                'buyimg' => [
+                    [
+                        'id' => 1,
+                        'bid' => 1,
+                        'gid' => self::FN
                     ]
                 ]
             ]
@@ -101,40 +93,29 @@ class BuyTest extends PHPUnit_Extensions_Database_TestCase
 
     public function testCreate()
     {
-        $this->assertEquals(1, $this->getConnection()->getRowCount('buy'), 'Pre-Condition');
-        $ret = Buy::create($this->info);
-        $this->assertInstanceOf('BuyTogether\Model\Buy', $ret);
-        $this->assertEquals(2, $this->getConnection()->getRowCount('buy'), 'Inserting failed');
+        $this->assertEquals(1, $this->getConnection()->getRowCount('buyimg'), 'Pre-Condition');
+        $ret = BuyImg::create(Buy::load(2), Img::load(self::FN2));
+        $this->assertInstanceOf('BuyTogether\Model\BuyImg', $ret);
+        $this->assertEquals(2, $this->getConnection()->getRowCount('buyimg'), 'Inserting failed');
     }
 
     public function testGet()
     {
-        $this->assertEquals(1, $this->getConnection()->getRowCount('buy'), 'Pre-Condition');
-        $ret = Buy::load(1);
-        $this->assertInstanceOf('BuyTogether\Model\Buy', $ret, 'Buy loading failed');
-        $ret = Buy::load(2);
+        $this->assertEquals(1, $this->getConnection()->getRowCount('buyimg'), 'Pre-Condition');
+        $ret = BuyImg::load(1);
+        $this->assertInstanceOf('BuyTogether\Model\BuyImg', $ret, 'Buyimg loading failed');
+        $ret = BuyImg::load(2);
         $this->assertNull($ret, 'Loaded non-exist buylist');
     }
 
     public function testDelete()
     {
-        $this->assertEquals(1, $this->getConnection()->getRowCount('buy'), 'Pre-Condition');
-        $ret = Buy::load(1);
+        $this->assertEquals(1, $this->getConnection()->getRowCount('buyimg'), 'Pre-Condition');
+        $ret = BuyImg::load(1);
         $ret->delete();
         $this->assertNull($ret->getToken(), 'Does not clear token after deleting');
-        $this->assertEquals(0, $this->getConnection()->getRowCount('buy'), 'Deleting failed');
+        $this->assertEquals(0, $this->getConnection()->getRowCount('buyimg'), 'Deleting failed');
         $ret->delete();
-        $this->assertEquals(0, $this->getConnection()->getRowCount('buy'), 'Unknown record deleted');
-    }
-
-    public function testUpdate()
-    {
-        $this->assertEquals(1, $this->getConnection()->getRowCount('buy'), 'Pre-Condition');
-        $ret = Buy::load(1);
-        $ret->setNum(10);
-        $ret->save();
-        $actual = $this->getConnection()->createQueryTable('buy', 'SELECT * FROM buy');
-        $expect = $this->getUpdatedDataSet()->getTable('buy');
-        $this->assertTablesEqual($expect, $actual, 'update failed');
+        $this->assertEquals(0, $this->getConnection()->getRowCount('buyimg'), 'Unknown record deleted');
     }
 }

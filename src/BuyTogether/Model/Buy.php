@@ -12,8 +12,6 @@ class Buy extends Seed
     private $name;
     private $price;
     private $oprice;
-    private $path;
-    private $mime;
     private $com;
     private $det;
     private $owner;
@@ -28,28 +26,26 @@ class Buy extends Seed
     private $gname;
     private $gacc;
 
-    protected function __construct($id, $info)
+    protected function __construct($info)
     {
-        $this->id = $id;
-        $this->time = $info[0];
-        $this->name = $info[1];
-        $this->price = $info[2];
-        $this->oprice = $info[3];
-        $this->path = $info[4];
-        $this->mime = $info[5];
-        $this->com = $info[6];
-        $this->det = $info[7];
-        $this->owner = $info[8];
-        $this->class = $info[9];
-        $this->area = $info[10];
-        $this->end = $info[11];
-        $this->quantity = $info[12];
-        $this->num = $info[13];
-        $this->conrun = $info[14];
-        $this->conjoin = $info[15];
-        $this->methor = $info[16];
-        $this->gname = $info[17];
-        $this->gacc = $info[18];
+        $this->id = $info[0];
+        $this->time = $info[1];
+        $this->name = $info[2];
+        $this->price = $info[3];
+        $this->oprice = $info[4];
+        $this->com = $info[5];
+        $this->det = $info[6];
+        $this->owner = $info[7];
+        $this->class = $info[8];
+        $this->area = $info[9];
+        $this->end = $info[10];
+        $this->quantity = $info[11];
+        $this->num = $info[12];
+        $this->conrun = $info[13];
+        $this->conjoin = $info[14];
+        $this->methor = $info[15];
+        $this->gname = $info[16];
+        $this->gacc = $info[17];
     }
 
     private static function bind($s, $p, $v = null, $t = PDO::PARAM_STR)
@@ -59,19 +55,6 @@ class Buy extends Seed
         } else {
             $s->bindValue($p, $v, $t);
         }
-    }
-
-    private static function generate($f)
-    {
-        $base_dir = self::getConfig()->get('dir', 'upload_group');
-        $prefix = self::getConfig()->get('prefix', 'upload_group');
-        return tempnam($base_dir, $prefix);
-    }
-
-    private static function fn($f)
-    {
-        $base_dir = self::getConfig()->get('dir', 'upload_group');
-        return $base_dir . DIRECTORY_SEPARATOR . $f;
     }
 
     public static function getAll($class = null, $area = null, $methor = null, $end = null)
@@ -136,50 +119,37 @@ class Buy extends Seed
         return null;
     }
 
-    public static function create($info, $path)
+    public static function create($info)
     {
         $db = self::getConfig()->getDb();
-        $sql = 'INSERT INTO `buy` (buy_Name, buy_Price, buy_OPrice, buy_Path, buy_Mime, buy_Com, buy_Det, ';
+        $sql = 'INSERT INTO `buy` (buy_Name, buy_Price, buy_OPrice, buy_Com, buy_Det, ';
         $sql .= 'buy_Owner, buy_Class, buy_Area, buy_Q, buy_ConRun, buy_ConJoin, ';
-        $sql .= 'buy_Methor, buy_Gname, buy_Gacc) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+        $sql .= 'buy_Methor, buy_Gname, buy_Gacc) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
 
-        if (!is_file($path)) {
-            return null;
-        }
         if (empty($info['gname'])) {
             $info['gname'] = null;
             $info['gacc'] = null;
         }
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mime = finfo_file($finfo, $path);
-        finfo_close($finfo);
-        if (substr($mime, 0, 6) != 'image/') {
-            return null;
-        }
-        $fn = self::generate($path);
 
         $stmt = $db->prepare($sql);
         $stmt->bindValue(1, $info['name']);
         $stmt->bindValue(2, $info['price']);
         $stmt->bindValue(3, $info['oprice']);
-        $stmt->bindValue(4, basename($fn));
-        $stmt->bindValue(5, $mime);
-        $stmt->bindValue(6, $info['com']);
-        $stmt->bindValue(7, $info['det']);
-        $stmt->bindValue(8, $info['owner']);
-        $stmt->bindValue(9, $info['class']);
-        $stmt->bindValue(10, $info['area']);
-        $stmt->bindValue(11, $info['quantity']);
-        $stmt->bindValue(12, $info['conrun']);
-        $stmt->bindValue(13, $info['conjoin']);
-        $stmt->bindValue(14, $info['methor']);
-        self::bind($stmt, 15, $info['gname']);
-        self::bind($stmt, 16, $info['gacc']);
+        $stmt->bindValue(4, $info['com']);
+        $stmt->bindValue(5, $info['det']);
+        $stmt->bindValue(6, $info['owner']);
+        $stmt->bindValue(7, $info['class']);
+        $stmt->bindValue(8, $info['area']);
+        $stmt->bindValue(9, $info['quantity']);
+        $stmt->bindValue(10, $info['conrun']);
+        $stmt->bindValue(11, $info['conjoin']);
+        $stmt->bindValue(12, $info['methor']);
+        self::bind($stmt, 13, $info['gname']);
+        self::bind($stmt, 14, $info['gacc']);
 
         if ($stmt->execute()) {
             $id = $db->lastInsertId();
             $stmt->closeCursor();
-            copy($path, $fn);
             return self::load($id);
         }
 
@@ -190,7 +160,7 @@ class Buy extends Seed
     public static function load($id)
     {
         $db = self::getConfig()->getDb();
-        $sql = 'SELECT UNIX_TIMESTAMP(buy_Time), buy_Name, buy_Price, buy_OPrice, buy_Path, buy_Mime, buy_Com, ';
+        $sql = 'SELECT buy_Id, UNIX_TIMESTAMP(buy_Time), buy_Name, buy_Price, buy_OPrice, buy_Com, ';
         $sql .= 'buy_Det, buy_Owner, buy_Class, buy_Area, buy_End, buy_Q, buy_Num, buy_ConRun, buy_ConJoin, ';
         $sql .= 'buy_Methor, buy_Gname, buy_Gacc FROM `buy` WHERE `buy_Id` = ?';
         
@@ -201,7 +171,7 @@ class Buy extends Seed
         if ($stmt->execute()) {
             $res = $stmt->fetch(PDO::FETCH_NUM);
             if ($res != null) {
-                $ret = new self($id, $res);
+                $ret = new self($res);
             }
         }
 
@@ -218,19 +188,6 @@ class Buy extends Seed
         return $this->id;
     }
 
-    public function getPath()
-    {
-        return self::fn($this->path);
-    }
-
-    /**
-     * 直接輸出檔案 (readfile)
-     */
-    public function readFile()
-    {
-        readfile(self::fn($this->path));
-    }
-
     /**
      * 取得時間
      *
@@ -239,16 +196,6 @@ class Buy extends Seed
     public function getTime()
     {
         return new DateTime('@' . $this->time);
-    }
-
-    /**
-     * 取得 MIME
-     *
-     * @return string of mime type
-     */
-    public function getMime()
-    {
-        return $this->mime;
     }
 
     public function getName()
@@ -355,7 +302,6 @@ class Buy extends Seed
         $stmt = $db->prepare($sql);
         $stmt->bindValue(1, $this->id);
         if ($stmt->execute()) {
-            unlink(self::fn($this->path));
             $this->id = null;
         }
         $stmt->closeCursor();

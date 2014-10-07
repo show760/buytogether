@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Buytogether</title>
-{% if status == true and user %}
+{% if status == true %}
     <script language="JavaScript">
         alert('{{string}}')
         window.location.replace('/index')
@@ -20,7 +20,7 @@
 <div>{{ include('top.html') }}</div>
 </table>
 <table border="2" align="center" bordercolor="#6666FF" >
-		<form method="POST" action="/user/register">
+		<form name="register" method="POST" enctype="multipart/form-data" action="/user/register">
 			<tr bgcolor="99FF99">
 				<td align="right">
 					會員信箱：
@@ -51,6 +51,14 @@
 				</td>
 				<td align="left">
 					<input type="password" name="info[pass2]">
+				</td>
+			</tr>
+			<tr bgcolor="99FF99">
+				<td align='right'>
+					上傳會員圖片：
+				</td>
+				<td align="left">
+					<input type="file" name="file" size="50">
 				</td>
 			</tr>
 			<tr bgcolor="99FF99">

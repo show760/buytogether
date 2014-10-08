@@ -17,7 +17,7 @@ $mux->get('/buy/view/:b', ['BuyTogether\Controller\BuyController','view'],
 );
 $mux->any('/buy/start', ['BuyTogether\Controller\BuyController','start']);
 $mux->get('/images/:token',['BuyTogether\Controller\BuyController','showImg']);
-$mux->get('/buy/join/:b',['BuyTogether\Controller\BuyController','join'],
+$mux->any('/buy/join/:b',['BuyTogether\Controller\BuyController','join'],
 	['require' =>['b' => '\d+']]
 );
 /**

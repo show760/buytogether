@@ -3,14 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>團購資料</title>
+{% if status == true and string %}
+    <script language="JavaScript">
+        alert('{{string}}')
+        window.location.replace('/index')
+    </script>
+{% elseif status == false and string %}
+    <script language="JavaScript">
+        alert('{{string}}')
+        window.location.replace('/buy/join/{{token}}')
+    </script>
+{% endif %}
 </head>
 <body background="/_images/wrapper-bg.jpg">
 <table align='center' border='0' width="1000">
      <div>{{ include('top.html') }}</div>
      <div>{{ include('bt.html') }}</div>
 </table>
-{% if buy %}
-<form  action='/joinbt' enctype="multipart/form-data" method='POST'>
+{% if buy and user %}
+<form  action='/buy/join/{{buy.token}}' enctype="multipart/form-data" method='POST'>
     <table align="center" style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 700px; border: 0px solid #624d48; text-align:left; '>
     <tr>
         <td align='center'>
@@ -50,7 +61,7 @@
     </tr>
     <tr>
         <td align='center'>
-            <font size='3'><B>(請確認身份：<font color='FF9900'>gogomango</font>)</B></font>
+            <font size='3'><B>(請確認身份：<font color='FF9900'>{{useremail}}</font>)</B></font>
         </td>
     </tr>
     <tr>

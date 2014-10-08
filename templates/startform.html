@@ -66,6 +66,12 @@
 				</td>
 			</tr>
 			<tr bgcolor= '#91C7FF'>
+				<td  colspan='2' align='left'>
+					<font size="3">請確認你的信箱為：
+						<font size="3" color="red"><b>{{useremail}}</b></font>
+						(如果這不是你的信箱,請重新登入)</font>
+				</td></tr>
+			<tr bgcolor= '#91C7FF'>
 				<td  colspan='2' align='center'>
 					團購簡介：<br>
 						 <textarea name="info[com]" rows="5" cols="45">團購的簡介：顯示在團購列表中的標題，簡短的介紹</textarea><br>
@@ -106,7 +112,7 @@
 			</tr>		
 			<tr bgcolor= '#FFAABB'>
 				<td  colspan='2' align='center'>
-					<input type='hidden' name='info[owner]' value='{{user}}'>
+					<input type='hidden' name='info[owner]' value='{{useremail}}'>
 					<INPUT TYPE="SUBMIT" VALUE="發起團購">
 					<INPUT TYPE="RESET" VALUE="重新輸入">
 				</td>

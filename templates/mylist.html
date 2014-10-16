@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的團購</title>
+</head>
+<body background="/_images/wrapper-bg.jpg">
+<table align='center' border='0' width="1000">
+     <div>{{ include('top.html') }}</div>
+     <div>{{ include('bt.html') }}</div>
+</table>
+<table border='1' align='center' width='800' style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 600px; border: 0px solid #624d48; text-align:left; '>
+    <tr align='center' height='30'>
+        <td colspan='2'>篩選身份</td>
+        <td colspan='2'>
+            <form action="/user/mylist" method="POST">
+                    <select  name='mode'>
+                        <option value='' selected>---請選擇---
+                        <option value='all'>不設限
+                        <option value='join'>團員
+                        <option value='group'>團主
+                    </select>
+                    <input type='submit' value='篩選'>
+            </form>
+        </td>
+    <tr align='center'>
+        <td height='30'>編號</td>
+        <td height='30'>團購名稱</td>
+        <td height='30'>身分</td>
+        <td height='30'>詳細資料</td>
+{% set count = 0 %}
+{% if buy %}
+  {% for b in buy %}
+    {% set count = count + 1 %}
+    <tr align="center">
+        <td height='30'>{{count}}</td>
+        <td height='30'>{{b.name}}</td>
+        <td height='30'>{{b.identity}}</td>
+        <td height='30'>
+            <a href="/user/mygroup/{{b.token}}">查看</a>
+        </td>
+  {% endfor %}
+{% endif %}
+{% if join %}
+  {% for j in join %}
+    {% set count = count + 1 %}
+    <tr align="center">
+        <td height='30'>{{count}}</td>
+        <td height='30'>{{j.name}}</td>
+        <td height='30'>{{j.identity}}</td>
+        <td height='30'>
+            <a href="/user/mybuy/{{j.token}}">查看</a>
+        </td>
+  {% endfor %}
+{% endif %}
+</table>
+<br />
+<hr width="1000">
+<br />
+<br />
+</body>

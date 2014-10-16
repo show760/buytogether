@@ -5,6 +5,8 @@ use Fruit\Seed;
 use BuyTogether\Model\User;
 use BuyTogether\Model\Img;
 use BuyTogether\Model\UserImg;
+use BuyTogether\Model\Buy;
+use BuyTogether\Model\Join;
 use Fruit\Session\PhpSession;
 
 class UserController extends Seed

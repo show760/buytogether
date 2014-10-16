@@ -68,7 +68,8 @@ class JoinTest extends PHPUnit_Extensions_Database_TestCase
                         'id' => 1,
                         'bid' => 1,
                         'uid' => 1,
-                        'quantity' => 10
+                        'quantity' => 10,
+                        'handle' => '揪團中'
                     ]
                 ]
             ]

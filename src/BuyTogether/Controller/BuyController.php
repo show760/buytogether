@@ -51,46 +51,6 @@ class BuyController extends Seed
         return self::getConfig()->getTmpl()->render('buyview.html', $msg);
     }
 
-    public function join($b)
-    {
-        $session = new PhpSession;
-        if (!$_POST['quantity']) {
-            $msg = array();
-            $msg['buy'] = Buy::view($b);
-            if ($session->get('user')) {
-                $msg['user'] = $session->get('user');
-                $user = User::load($session->get('user'));
-                $msg['useremail'] = $user->getEmail();
-            }
-            return self::getConfig()->getTmpl()->render('join.html', $msg);
-        } else {
-            if (!preg_match('/\d+/', $_POST['quantity'])) {
-                $msg = array( 'status' => false, 'string' => '請輸入數字', 'token' => $b);
-                return self::getConfig()->getTmpl()->render('join.html', $msg);
-            }
-            $buy = Buy::load($b);
-            $user = User::load($session->get('user'));
-            if ($buy instanceof Buy and $user instanceof User) {
-                $n = $buy->getNum() + $_POST['quantity'];
-                if ($n > $buy->getQuantity()) {
-                    $msg = array( 'status' => false, 'string' => '剩餘數量不足', 'token' => $b);
-                } else {
-                    $join = Join::create($buy, $user, $_POST['quantity']);
-                    if ($join instanceof Join) {
-                        $buy->setNum($n);
-                        $buy->save();
-                        $user->setJoin($user->getJoin() + 1);
-                        $user->save();
-                        $msg = array( 'status' => true, 'string' => '你已經成功加入團購');
-                    }
-                }
-            } else {
-                $msg = array( 'status' => false, 'string' => '資料有誤請確認', 'token' => $b);
-            }
-            return self::getConfig()->getTmpl()->render('join.html', $msg);
-        }
-    }
-
     public function start()
     {
         $session = new PhpSession;

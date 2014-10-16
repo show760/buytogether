@@ -178,6 +178,25 @@ class Buy extends Seed
         $stmt->closeCursor();
         return $ret;
     }
+
+    /**
+    *   利用email得到Token
+    */
+    public static function listByEmail($email)
+    {
+        $db = self::getConfig()->getDb();
+        $sql = 'SELECT `buy_Id` FROM `buy` WHERE `buy_Owner` = ?';
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(1, $email);
+        $ret = null;
+
+        if ($stmt->execute()) {
+            $ret = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+        }
+        $stmt->closeCursor();
+        return $ret;
+    }
     /**
      * 取得代碼
      *

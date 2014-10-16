@@ -10,13 +10,15 @@ class Join extends Seed
     private $bid;
     private $uid;
     private $quantity;
+    private $handle;
 
-    protected function __construct($i, $b, $u, $q)
+    protected function __construct($i, $b, $u, $q, $h)
     {
         $this->id = $i;
         $this->bid = $b;
         $this->uid = $u;
         $this->quantity = $q;
+        $this->handle = $h;
     }
 
     /**
@@ -48,7 +50,7 @@ class Join extends Seed
     public static function load($id)
     {
         $db = self::getConfig()->getDb();
-        $sql = 'SELECT `bid`, `uid`, `quantity` FROM `join` WHERE `id` = ?';
+        $sql = 'SELECT `bid`, `uid`, `quantity`, `handle` FROM `join` WHERE `id` = ?';
 
         $stmt = $db->prepare($sql);
         $stmt->bindValue(1, $id);
@@ -57,8 +59,40 @@ class Join extends Seed
         if ($stmt->execute()) {
             $res = $stmt->fetch(PDO::FETCH_NUM);
             if ($res != null) {
-                $ret = new self($id, $res[0], $res[1], $res[2]);
+                $ret = new self($id, $res[0], $res[1], $res[2], $res[3]);
             }
+        }
+        $stmt->closeCursor();
+        return $ret;
+    }
+
+    public static function bidListByUid($uid)
+    {
+        $db = self::getConfig()->getDb();
+        $sql = 'SELECT `bid` FROM `join` WHERE `uid` = ?';
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(1, $uid);
+        $ret = null;
+
+        if ($stmt->execute()) {
+            $ret = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+        }
+        $stmt->closeCursor();
+        return $ret;
+    }
+
+    public static function listByBid($bid)
+    {
+        $db = self::getConfig()->getDb();
+        $sql = 'SELECT `id` FROM `join` WHERE `bid` = ?';
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(1, $bid);
+        $ret = null;
+
+        if ($stmt->execute()) {
+            $ret = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
         }
         $stmt->closeCursor();
         return $ret;
@@ -80,6 +114,14 @@ class Join extends Seed
     {
         return $this->quantity;
     }
+    public function getHandle()
+    {
+        return $this->handle;
+    }
+    public function setHandle($h)
+    {
+        $this->handle = $h;
+    }
 
     /**
     *  刪除
@@ -90,13 +132,28 @@ class Join extends Seed
             return null;
         }
         $db = self::getConfig()->getDb();
-        $sql = 'DELETE FROM `join` WHERE id = ?';
+        $sql = 'DELETE FROM `join` WHERE `id` = ?';
 
         $stmt = $db->prepare($sql);
         $stmt->bindValue(1, $this->id);
         if ($stmt->execute()) {
             $this->id = null;
         }
+        $stmt->closeCursor();
+    }
+
+    /**
+    * 儲存
+    */
+    public function save()
+    {
+        $db = self::getConfig()->getDb();
+        $sql = 'UPDATE `join` SET `handle` = ? WHERE `id` = ?';
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(1, $this->handle);
+        $stmt->bindValue(2, $this->id);
+        $stmt->execute();
         $stmt->closeCursor();
     }
 }

@@ -32,6 +32,7 @@ CREATE TABLE `join` (
   `bid` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
+  `handle` varchar(40) NOT NULL DEFAULT '啾團中',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

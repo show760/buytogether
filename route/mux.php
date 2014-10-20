@@ -23,7 +23,7 @@ $mux->get('/images/:token',['BuyTogether\Controller\BuyController','showImg']);
 $mux->any('/buy/join/:b',['BuyTogether\Controller\JoinController','join'],
 	['require' =>['b' => '\d+']]
 );
-$mux->get('/join/delete/:id',['BuyTogether\Controller\JoinController','delete'],
+$mux->get('/join/delete/:id',['BuyTogether\Controller\JoinController','groupDelete'],
 	['require' =>['id' => '\d+']]
 );
 /**
@@ -40,6 +40,9 @@ $mux->get('/userimages/:token',['BuyTogether\Controller\UserController','showUse
 $mux->any('/user/mylist',['BuyTogether\Controller\GroupController','myList']);
 $mux->any('/user/mygroup/:bid',['BuyTogether\Controller\GroupController','myGroup'],
 	['require' =>['bid' => '\d+']]
+);
+$mux->any('/user/myjoin/:jid',['BuyTogether\Controller\GroupController','myJoin'],
+	['require' =>['jid' => '\d+']]
 );
 
 return $mux;

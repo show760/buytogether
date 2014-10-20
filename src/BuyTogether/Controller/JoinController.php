@@ -49,16 +49,19 @@ class JoinController extends seed
             return self::getConfig()->getTmpl()->render('join.html', $msg);
         }
     }
-    public function delete($id)
+    public function groupDelete($id)
     {
         $session = new PhpSession;
         if ($session->get('user')) {
             $join = Join::load($id);
             $buy = Buy::load($join->getBid());
-            if ($join instanceof Join && $buy instanceof Buy) {
+            $buyuser = User::load($join->getUid());
+            if ($join instanceof Join && $buy instanceof Buy && $buyuser instanceof User) {
                 $count = $buy->getNum() - $join->getQuantity();
                 $buy->setNum($count);
                 $buy->save();
+                $buyuser->setJoin($buyuser->getJoin() - 1);
+                $buyuser->save();
                 $join->delete();
                 $msg = array(
                     'status' => true,

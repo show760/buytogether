@@ -66,10 +66,10 @@ class Join extends Seed
         return $ret;
     }
 
-    public static function bidListByUid($uid)
+    public static function listByUid($uid)
     {
         $db = self::getConfig()->getDb();
-        $sql = 'SELECT `bid` FROM `join` WHERE `uid` = ?';
+        $sql = 'SELECT `id` FROM `join` WHERE `uid` = ?';
 
         $stmt = $db->prepare($sql);
         $stmt->bindValue(1, $uid);

@@ -17,9 +17,9 @@ class GroupController extends Seed
         if ($session->get('user')) {
             $msg = null;
             $msg = array('user' => $session->get('user'));
-            $user = User::load($session->get('user'));
-            $email=$user->getEmail();
             if ($_POST['mode'] !== 'join' || !$_POST['mode']) {
+                $user = User::load($session->get('user'));
+                $email=$user->getEmail();
                 $buyTokens = Buy::listByEmail($email);
                 if ($buyTokens) {
                     foreach ($buyTokens as $key) {
@@ -32,11 +32,12 @@ class GroupController extends Seed
                 }
             }
             if ($_POST['mode'] !== 'group' || !$_POST['mode']) {
-                $bids = Join::bidListByUid($session->get('user'));
-                if ($bids) {
-                    foreach ($bids as $key) {
-                        $buy = Buy::load($key);
-                        $msg['join'][$key]['token'] = $buy->getToken();
+                $joins = Join::listByUid($session->get('user'));
+                if ($joins) {
+                    foreach ($joins as $key) {
+                        $join = Join::load($key);
+                        $buy = Buy::load($join->getBid());
+                        $msg['join'][$key]['token'] = $join->getToken();
                         $msg['join'][$key]['name'] = $buy->getName();
                         $msg['join'][$key]['identity'] = '團員';
                     }
@@ -71,5 +72,36 @@ class GroupController extends Seed
             }
             return self::getConfig()->getTmpl()->render('mygroup.html', $msg);
         }
+    }
+    public function myJoin($jid)
+    {
+        $session = new PhpSession;
+        if ($session->get('user')) {
+            $user = User::load($session->get('user'));
+            $j = Join::load($jid);
+            if ($j->getUid() == $session->get('user')) {
+                $msg['user'] = $session->get('user');
+                $buy = Buy::load($j->getBid());
+                if ($buy instanceof Buy) {
+                    $msg['buy']['token'] = $buy->getToken();
+                    $msg['buy']['name'] = $buy->getName();
+                    $msg['buy']['onwer'] = $buy->getOwner();
+                    $msg['buy']['price'] = $buy->getPrice();
+                    $msg['buy']['price'] = $buy->getMethor();
+                    if ($buy->getMethor() == 'remittance') {
+                        $msg['buy']['gname'] = $buy->getGname();
+                        $msg['buy']['gacc'] = $buy->getGacc();
+                    }
+                }
+                $joins = Join::listByBid($j->getBid());
+                foreach ($joins as $key => $value) {
+                    $join = Join::load($value);
+                    $msg['join'][$key]['token'] = $join->getToken();
+                    $msg['join'][$key]['quantity'] = $join->getQuantity();
+                    $msg['join'][$key]['handle'] = $join->getHandle();
+                }
+            }
+        }
+        var_dump($msg);
     }
 }

@@ -56,8 +56,9 @@ class GroupController extends Seed
             if ($user->getEmail() == $buy->getOwner()) {
                 $joins = Join::listByBid($bid);
                 $msg['user'] = $session->get('user');
-                $msg['buyname'] = $buy->getName();
-                $msg['buyowner'] = $buy->getOwner();
+                $msg['buy']['token'] = $bid;
+                $msg['buy']['name'] = $buy->getName();
+                $msg['buy']['onwer'] = $buy->getOwner();
                 foreach ($joins as $key => $value) {
                     $join = Join::load($value);
                     $joinuser = User::load($join->getUid());

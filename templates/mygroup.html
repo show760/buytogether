@@ -11,7 +11,7 @@
 {% elseif status == false and string %}
     <script language="JavaScript">
         alert('{{string}}')
-        window.location.replace('/user/mygroup/{{bid}}')
+        window.location.replace('/user/mylist')
     </script>
 {% endif %}
 </head>
@@ -23,12 +23,12 @@
 <table align='center' width='110%' border='1' style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 1100px; border: 0px solid #624d48; text-align:left; '>
 	<tr >
 		<td align='center' colspan='11'>
-			<font size='5'>{{buyname}}</font>
+			<font size='5'>{{buy.name}}</font>
 		</td>
 	<tr >
 		<td align='center' colspan='11'>
 			<font size='4' color='000000' face='微軟正黑體'><B>
-				<a href='{$_SERVER['PHP_SELF']}?op=group_eva&buy_Owner={$row['buy_Owner']}&buy_Id={$buy_Id}'>團主{{buyowner}}的評價</a></B>
+				<a href='{$_SERVER['PHP_SELF']}?op=group_eva&buy_Owner={$row['buy_Owner']}&buy_Id={$buy_Id}'>團主{{buy.owner}}的評價</a></B>
 			</font>
 		</td>
 	<tr >
@@ -58,7 +58,7 @@
 		<td align='center'>{{j.run}}</td>
 		<td align='center'>{{j.join}}</td>
 		<td align='center'>
-			<a href="/join/delete/{{j.token}}">刪除</a>
+			<a href="/join/delete/{{buy.token}}/{{j.token}}">刪除</a>
 		</td>
 		<td colspan="2" align='center'>{{j.handle}}</td>
 		<td colspan="2" align='center'>修改狀態</td>

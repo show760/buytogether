@@ -1,12 +1,14 @@
 <?php
 namespace BuyTogether\Controller;
 
+use Exception;
 use Fruit\Seed;
 use Fruit\Model;
 use Fruit\Session\PhpSession;
 use BuyTogether\Model\Buy;
 use BuyTogether\Model\User;
 use BuyTogether\Model\Join;
+use BuyTogether\Library\ErrorLibrary;
 
 class JoinController extends seed
 {
@@ -23,59 +25,79 @@ class JoinController extends seed
             }
             return self::getConfig()->getTmpl()->render('join.html', $msg);
         } else {
-            if (!preg_match('/\d+/', $_POST['quantity'])) {
-                $msg = array( 'status' => false, 'string' => '請輸入數字', 'token' => $b);
-                return self::getConfig()->getTmpl()->render('join.html', $msg);
-            }
-            $buy = Buy::load($b);
-            $user = User::load($session->get('user'));
-            if ($buy instanceof Buy and $user instanceof User) {
+            try {
+                if (!preg_match('/\d+/', $_POST['quantity'])) {
+                    throw new Exception('請輸入數字');
+                }
+                $buy = Buy::load($b);
+                if (!$buy instanceof Buy) {
+                    throw new Exception('查無團購資料');
+                }
+                $user = User::load($session->get('user'));
+                if (!$user instanceof User) {
+                    throw new Exception('請先登入');
+                }
                 $n = $buy->getNum() + $_POST['quantity'];
                 if ($n > $buy->getQuantity()) {
-                    $msg = array( 'status' => false, 'string' => '剩餘數量不足', 'token' => $b);
-                } else {
-                    $join = Join::create($buy, $user, $_POST['quantity']);
-                    if ($join instanceof Join) {
-                        $buy->setNum($n);
-                        $buy->save();
-                        $user->setJoin($user->getJoin() + 1);
-                        $user->save();
-                        $msg = array( 'status' => true, 'string' => '你已經成功加入團購');
-                    }
+                    throw new Exception('剩餘數量不足，請重新選擇數量！');
                 }
-            } else {
-                $msg = array( 'status' => false, 'string' => '資料有誤請確認', 'token' => $b);
+                $join = Join::create($buy, $user, $_POST['quantity']);
+                if (!$join instanceof Join) {
+                    throw new Exception('參與團購失敗，請再試一次！');
+                }
+                $buy->setNum($n);
+                $buy->save();
+                $user->setJoin($user->getJoin() + 1);
+                $user->save();
+                $msg = array( 'status' => true, 'string' => '你已經成功加入團購');
+            } catch (Exception $e) {
+                $msg = array('status' => false, 'string' => $e->getMessage(), 'token' => $b);
             }
             return self::getConfig()->getTmpl()->render('join.html', $msg);
         }
     }
-    public function groupDelete($id)
+    public function groupDelete($bid, $jid)
     {
-        $session = new PhpSession;
-        if ($session->get('user')) {
-            $join = Join::load($id);
-            $buy = Buy::load($join->getBid());
-            $buyuser = User::load($join->getUid());
-            if ($join instanceof Join && $buy instanceof Buy && $buyuser instanceof User) {
-                $count = $buy->getNum() - $join->getQuantity();
-                $buy->setNum($count);
-                $buy->save();
-                $buyuser->setJoin($buyuser->getJoin() - 1);
-                $buyuser->save();
-                $join->delete();
-                $msg = array(
-                    'status' => true,
-                    'string' => '已刪除該訂單！',
-                    'bid' => $buy->getToken()
-                );
-            } else {
-                $msg = array(
-                    'status' => false,
-                    'string' => '查無該訂單，請確認資料是否有誤',
-                    'bid' => $buy->getToken()
-                );
+        try {
+            $session = new PhpSession;
+            if (!$session->get('user')) {
+                throw new Exception('請先登入!');
             }
-            return self::getConfig()->getTmpl()->render('mygroup.html', $msg);
+            $join = Join::load($jid);
+            if (!$join instanceof Join) {
+                throw new Exception('查無訂單!');
+            }
+            $buy = Buy::load($join->getBid());
+            if (!$buy instanceof Buy) {
+                throw new Exception('查無團購!');
+            }
+            if ($buy->getToken() !== $bid) {
+                throw new Exception('訂單資料與團購資料不符，請確認!');
+            }
+            $buyuser = User::load($join->getUid());
+            if (!$buyuser instanceof User) {
+                throw new Exception('查無該團員!');
+            }
+            $count = $buy->getNum() - $join->getQuantity();
+            $buy->setNum($count);
+            $buy->save();
+            $buyuser->setJoin($buyuser->getJoin() - 1);
+            $buyuser->save();
+            $join->delete();
+            $msg = array(
+                'status' => true,
+                'string' => '已刪除該訂單！',
+                'bid' => $buy->getToken()
+            );
+        } catch (Exception $e) {
+            ErrorLibrary::setException($e);
         }
+        if (ErrorLibrary::isException()) {
+            $msg = array(
+                    'status' => false,
+                    'string' => ErrorLibrary::getAllExceptionMsg()
+            );
+        }
+        return self::getConfig()->getTmpl()->render('mygroup.html', $msg);
     }
 }

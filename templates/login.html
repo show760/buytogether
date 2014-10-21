@@ -9,10 +9,17 @@
         window.location.replace('/index')
     </script>
 {% elseif status == false and string %}
+    {% if string == '已登入' %}
+        <script language="JavaScript">
+        alert('{{string}}')
+        window.location.replace('/index')
+    	   </script>
+    {% else %}
     <script language="JavaScript">
         alert('{{string}}')
         window.location.replace('/user/login')
     </script>
+    {% endif %}
 {% endif %}
 </head>
 <body background="/_images/wrapper-bg.jpg">

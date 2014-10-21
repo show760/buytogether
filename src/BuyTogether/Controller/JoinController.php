@@ -33,6 +33,9 @@ class JoinController extends seed
                 if (!$buy instanceof Buy) {
                     throw new Exception('查無團購資料');
                 }
+                if ($buy->getEnd() == 'before') {
+                    throw new Exception('該團購已經結束');
+                }
                 $user = User::load($session->get('user'));
                 if (!$user instanceof User) {
                     throw new Exception('請先登入');
@@ -78,12 +81,16 @@ class JoinController extends seed
             if (!$buyuser instanceof User) {
                 throw new Exception('查無該團員!');
             }
+            if ($join->getHandle() !== '啾團中') {
+                throw new Exception('該訂單狀態為—'.$join->getHandle().'—禁止刪除');
+            }
             $count = $buy->getNum() - $join->getQuantity();
             $buy->setNum($count);
             $buy->save();
             $buyuser->setJoin($buyuser->getJoin() - 1);
             $buyuser->save();
-            $join->delete();
+            $join->setHandle('訂單被團主取消');
+            $join->save();
             $msg = array(
                 'status' => true,
                 'string' => '已刪除該訂單！',
@@ -95,7 +102,8 @@ class JoinController extends seed
         if (ErrorLibrary::isException()) {
             $msg = array(
                     'status' => false,
-                    'string' => ErrorLibrary::getAllExceptionMsg()
+                    'string' => ErrorLibrary::getAllExceptionMsg(),
+                    'bid' => $bid
             );
         }
         return self::getConfig()->getTmpl()->render('mygroup.html', $msg);

@@ -6,7 +6,9 @@ use BuyTogether\Model\User;
 use BuyTogether\Model\Img;
 use BuyTogether\Model\UserImg;
 use BuyTogether\Model\Buy;
+use BuyTogether\Model\JoinImg;
 use BuyTogether\Model\Join;
+use BuyTogether\Library\ImgLibrary;
 use Fruit\Session\PhpSession;
 
 class GroupController extends Seed
@@ -50,28 +52,92 @@ class GroupController extends Seed
     public function myGroup($bid)
     {
         $session = new PhpSession;
+        if (!$_POST['handle'] && !$_POST['jid']) {
+            if ($session->get('user')) {
+                $user = User::load($session->get('user'));
+                $buy = Buy::load($bid);
+                if ($user->getEmail() == $buy->getOwner()) {
+                    $joins = Join::listByBid($bid);
+                    $msg['user'] = $session->get('user');
+                    $msg['buy']['token'] = $bid;
+                    $msg['buy']['name'] = $buy->getName();
+                    $msg['buy']['onwer'] = $buy->getOwner();
+                    $msg['buy']['price'] = $buy->getPrice();
+                    $msg['buy']['methor'] = $buy->getMethor();
+                    foreach ($joins as $key => $value) {
+                        $join = Join::load($value);
+                        $joinuser = User::load($join->getUid());
+                        $msg['join'][$key]['token'] = $join->getToken();
+                        $msg['join'][$key]['quantity'] = $join->getQuantity();
+                        $msg['join'][$key]['email'] = $joinuser->getEmail();
+                        $msg['join'][$key]['name'] = $joinuser->getName();
+                        $msg['join'][$key]['run'] = $joinuser->getRun();
+                        $msg['join'][$key]['join'] = $joinuser->getJoin();
+                        $msg['join'][$key]['handle'] = $join->getHandle();
+                    }
+                }
+                return self::getConfig()->getTmpl()->render('mygroup.html', $msg);
+            }
+        } else {
+            $jid = $_POST['jid'];
+            $handle = $_POST['handle'];
+            $join = Join::load($jid);
+            if ($join instanceof Join) {
+                $user = User::load($session->get('user'));
+                $buy = Buy::load($bid);
+                if ($user instanceof User && $buy instanceof Buy) {
+                    if ($user->getEmail() == $buy->getOwner()) {
+                        $join->setHandle($handle);
+                        $join->save();
+                    }
+                }
+            }
+            $msg = array(
+                'status' => true,
+                'string' => '修改訂單狀況成功',
+                'bid' => $bid
+            );
+            return self::getConfig()->getTmpl()->render('mygroup.html', $msg);
+        }
+    }
+    public function allOrdersChange($bid)
+    {
+        if ($_POST['handle']) {
+            $handle = $_POST['handle'];
+            $joins = Join::listByBid($bid);
+            foreach ($joins as $key => $value) {
+                $join = Join::load($value);
+                if ($join->getHandle() !== '訂單被團主取消') {
+                    $join->setHandle($handle);
+                    $join->save();
+                }
+            }
+            $msg = array(
+                'status' => true,
+                'string' => '修改訂單狀況成功',
+                'bid' => $bid
+            );
+            return self::getConfig()->getTmpl()->render('mygroup.html', $msg);
+        }
+    }
+    public function groupStatus($bid)
+    {
+        $session = new PhpSession;
         if ($session->get('user')) {
             $user = User::load($session->get('user'));
             $buy = Buy::load($bid);
             if ($user->getEmail() == $buy->getOwner()) {
-                $joins = Join::listByBid($bid);
-                $msg['user'] = $session->get('user');
-                $msg['buy']['token'] = $bid;
-                $msg['buy']['name'] = $buy->getName();
-                $msg['buy']['onwer'] = $buy->getOwner();
-                foreach ($joins as $key => $value) {
-                    $join = Join::load($value);
-                    $joinuser = User::load($join->getUid());
-                    $msg['join'][$key]['token'] = $join->getToken();
-                    $msg['join'][$key]['quantity'] = $join->getQuantity();
-                    $msg['join'][$key]['email'] = $joinuser->getEmail();
-                    $msg['join'][$key]['name'] = $joinuser->getName();
-                    $msg['join'][$key]['run'] = $joinuser->getRun();
-                    $msg['join'][$key]['join'] = $joinuser->getJoin();
-                    $msg['join'][$key]['handle'] = $join->getHandle();
+                if ($_POST['end']) {
+                    $buy->setEnd($_POST['end']);
+                    $buy->save();
+                    $msg = array(
+                        'status' => true,
+                        'string' => '修改團購狀況成功',
+                        'bid' => $bid
+                    );
+                    return self::getConfig()->getTmpl()->render('mygroup.html', $msg);
                 }
             }
-            return self::getConfig()->getTmpl()->render('mygroup.html', $msg);
         }
     }
     public function myJoin($jid)
@@ -88,7 +154,7 @@ class GroupController extends Seed
                     $msg['buy']['name'] = $buy->getName();
                     $msg['buy']['onwer'] = $buy->getOwner();
                     $msg['buy']['price'] = $buy->getPrice();
-                    $msg['buy']['price'] = $buy->getMethor();
+                    $msg['buy']['methor'] = $buy->getMethor();
                     if ($buy->getMethor() == 'remittance') {
                         $msg['buy']['gname'] = $buy->getGname();
                         $msg['buy']['gacc'] = $buy->getGacc();
@@ -103,6 +169,55 @@ class GroupController extends Seed
                 }
             }
         }
-        var_dump($msg);
+        return self::getConfig()->getTmpl()->render('myjoin.html', $msg);
+    }
+    public function uploadJoinImg($jid)
+    {
+        $op = null;
+        if ($_FILES["file"]["error"] > 0) {
+            $op = '1';
+        } else {
+            $join = Join::load($jid);
+            $img = Img::create($_FILES["file"]["tmp_name"], 'upload_join');
+            if ($join instanceof Join && $img instanceof Img) {
+                $joinimg = JoinImg::create($join, $img);
+                if ($joinimg instanceof Joinimg) {
+                    $msg = array(
+                        'status' => true,
+                        'string' => '上傳匯款收據成功',
+                        'jid' => $jid
+                    );
+                    $join->setHandle('已上傳匯款收據');
+                    $join->save();
+                    return self::getConfig()->getTmpl()->render('myjoin.html', $msg);
+                }
+            }
+        }
+        $msg = ImgLibrary::imgError($op);
+        $msg['jid'] = $jid;
+        return self::getConfig()->getTmpl()->render('myjoin.html', $msg);
+    }
+    /**
+     * 用photoToken取得image
+     *
+     * @param  mixed buy token $token
+     * @return image or null
+     */
+    public function showJoinImg($token = null)
+    {
+        $joinimg = JoinImg::loadByJid($token);
+        $gid = $joinimg->getGid();
+        $img = Img::load($gid);
+        if (!$img instanceof Img) {
+            return json_encode(
+                array(
+                    'status' => false,
+                    'msg'    => '查無照片'
+                )
+            );
+        }
+
+        header('Content-Type: '.$img->getMime());
+        $img->readFile();
     }
 }

@@ -14,7 +14,7 @@ CREATE TABLE `buy` (
   `buy_Owner` varchar(36) NOT NULL,
   `buy_Class` varchar(15) NOT NULL,
   `buy_Area` varchar(4) NOT NULL,
-  `buy_End` varchar(5) NOT NULL DEFAULT 'open',
+  `buy_End` varchar(10) NOT NULL DEFAULT 'open',
   `buy_Q` int(11) NOT NULL,
   `buy_Num` int(11) NOT NULL DEFAULT '0',
   `buy_ConRun` int(11) NOT NULL,
@@ -51,6 +51,14 @@ DROP TABLE IF EXISTS `buyimg`;
 CREATE TABLE `buyimg` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bid` int(11) NOT NULL,
+  `gid` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `joinimg`;
+CREATE TABLE `joinimg` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `jid` int(11) NOT NULL,
   `gid` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

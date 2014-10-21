@@ -7,6 +7,7 @@ use BuyTogether\Model\Img;
 use BuyTogether\Model\UserImg;
 use BuyTogether\Model\Buy;
 use BuyTogether\Model\Join;
+use BuyTogether\Library\ImgLibrary;
 use Fruit\Session\PhpSession;
 
 class UserController extends Seed
@@ -121,22 +122,26 @@ class UserController extends Seed
                 if (User::getIdByEmail($info['email'])) {
                     $msg = array( 'status' => false, 'string' => '該信箱已被註冊');
                 } else {
-                    $user = User::create($info);
-                    if ($user instanceof User) {
-                        if ($_FILES["file"]["tmp_name"]) {
-                            $img = Img::create($_FILES["file"]["tmp_name"], 'upload_user');
-                            $userimg = UserImg::create($user, $img);
-                        }
-                        $session = new PhpSession;
-                        $session->set('user', $user->getToken());
-                        $msg = array(
-                            'status' => true,
-                            'string' => '註冊會員成功',
-                            'user' => $session->get('token')
-                        );
+                    if ($_FILES["file"]["error"] > 0) {
+                        $op = '1';
                     } else {
-                        $msg = array( 'status' => false, 'Unknown error. please try again.');
+                        $user = User::create($info);
+                        if ($user instanceof User) {
+                            $op = null;
+                                $img = Img::create($_FILES["file"]["tmp_name"], 'upload_user');
+                                $userimg = UserImg::create($user, $img);
+                                $session = new PhpSession;
+                                $session->set('user', $user->getToken());
+                                $msg = array(
+                                    'status' => true,
+                                    'string' => '註冊會員成功',
+                                    'user' => $session->get('token')
+                                );
+                        } else {
+                            $msg = array( 'status' => false, 'Unknown error. please try again.');
+                        }
                     }
+                    $msg = ImgLibrary::imgError($op);
                 }
             }
             return self::getConfig()->getTmpl()->render('register.html', $msg);
@@ -154,6 +159,11 @@ class UserController extends Seed
 
     public function login()
     {
+        $session = new PhpSession;
+        if ($session->get('user')) {
+            $msg = array( 'status' => false, 'string' => '已登入');
+            return self::getConfig()->getTmpl()->render('login.html', $msg);
+        }
         if ($_POST['email']) {
             $email = $_POST['email'];
             $pass = $_POST['pass'];
@@ -167,7 +177,6 @@ class UserController extends Seed
                     if (!$valid) {
                         $msg = array( 'status' => false, 'string' => '密碼錯誤請進行確認');
                     } else {
-                        $session = new PhpSession;
                         $session->set('user', $user->getToken());
                         $msg = array( 'status' => true, 'string' => '登入成功', 'user' => $session->get('user'));
                     }

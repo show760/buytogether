@@ -23,7 +23,7 @@
         </td>
     </tr>
     <tr>
-        <td align='center' rowspan='6'>
+        <td align='center' rowspan='5'>
             <img border="1" width="300" height="300" src='/images/{{buy.token}}'>
         </td>
     </tr>
@@ -44,10 +44,14 @@
     </tr>
     <tr>
         <td align='left'>                       
-            <font size='5' color='FF9900'><B>已賣出{{buy.num}}份</B></font>
+            <font size='5' color='FF6699'><B>已賣出{{buy.num}}份</B></font>
         </td>
     </tr>
-    <tr></tr>
+    <tr>
+        <td align="center" colspan="2">
+            <font face="微軟正黑體" size="4" color="FF9900"><B>團主：{{buy.owner}}</B></font>
+        </td>
+    </tr>
     <tr bgcolor= '#CCBBFF'>
         <td align='center' colspan='2'>
             <font face='微軟正黑體' size='4'><B>團購地區:{{buy.area}}</B></font>
@@ -84,18 +88,25 @@
     </tr>
     {% endif %}
 {% endif %}
-{% if user %}
+{% if buy.end == 'before' %}
+    <tr>
+       <td align='center' colspan='2'>
+            <font color="red" size="4"><b>該團購已結束</b></font>
+        </td>
+{% else %}
+    {% if user %}
     <tr>
         <td align='center' colspan='2'>
             <a href="/buy/join/{{buy.token}}">加入團購</a>
         </td>
     </tr>
-{% else %}
+    {% else %}
     <tr>
         <td align='center' colspan='2'>
             <a href="/user/login">請先登入</a>
         </td>
     </tr>
+    {% endif %}
 {% endif %}
     <tr bgcolor="#CCBBFF">
         <td align="center" colspan="2">

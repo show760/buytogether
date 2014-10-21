@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的團購</title>
+{% if string %}
+    <script language="JavaScript">
+        alert('{{string}}')
+        window.location.replace('/user/myjoin/{{jid}}')
+    </script>
+{% endif %}
+</head>
+<body background="/_images/wrapper-bg.jpg">
+<table align='center' border='0' width="1000">
+     <div>{{ include('top.html') }}</div>
+     <div>{{ include('bt.html') }}</div>
+</table>
+<table align='center' style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 700px; border: 0px solid #624d48; text-align:left; '>
+    <tr align="center">
+        <td colspan="2">
+            <font size="6"><B>{{buy.name}}</B></font>
+        </td>
+    <tr align="center">
+        <td colspan="2">
+            <img style="height:300px;width:300px;border-style:solid;border-width:1px;border-color:black;" src='/images/{{buy.token}}' >
+        </td>
+    <tr align="center">
+        <td colspan="2">
+            <font color="FF9900" size="4"><B>團主：</B>{{buy.onwer}}</font>
+        </td>
+    <tr align="left">
+        <td  width="350">
+            <font size="5" color="FF6699">價錢：<B>＄{{buy.price}}</B></font>
+        </td>
+        <td>
+            <font size="5">付款方式：{% if buy.methor == 'facetoface' %}面交{% elseif buy.methor == 'remittance' %}郵局匯款{% endif %}</font>
+        </td>
+    {% if buy.methor == 'remittance' %}
+    <tr align="left">
+        <td  width="350">
+            <font size="5">受款人姓名：{{buy.gname}}</font>
+        </td>
+        <td>
+            <font size="5">帳戶號碼：{{buy.gacc}}</font>
+        </td>
+    {% endif %}
+</table>
+<table align='center' border="1" style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 700px; border: 0px solid #624d48; text-align:left; '>
+    <tr align="center">
+        <td colspan="4"><font size="5"><B>你的訂單</B></font></td>
+    <tr>
+        <td><B>訂單編號</B></td>
+        <td><B>訂購數量</B></td>
+        <td><B>購買總價</B></td>
+        <td><B>團購狀態</B></td>
+{% if join %}
+{% for j in join %}
+    <tr align="center">
+        <td>{{j.token}}</td>
+        <td>{{j.quantity}}</td>
+        <td><font color="red">$ {{ j.quantity * buy.price }}</font></td>
+        <td>
+           <font color="red">{{j.handle}}</font>
+            {% if j.handle == '請匯款並上傳匯款單' %}
+            <form method="POST" enctype="multipart/form-data" action="/user/uploadjoinimg/{{j.token}}">
+                上傳匯款單：<input type="file" name="file">
+                <input type="submit" value="上傳">
+            </form>
+            {% endif %}
+        </td>
+{% endfor %}
+{% endif %}
+</table>
+<br />
+<hr width="1000">
+<br />
+<br />
+</body>
+</html>

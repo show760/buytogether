@@ -41,8 +41,18 @@ $mux->any('/user/mylist',['BuyTogether\Controller\GroupController','myList']);
 $mux->any('/user/mygroup/:bid',['BuyTogether\Controller\GroupController','myGroup'],
 	['require' =>['bid' => '\d+']]
 );
+$mux->any('/user/mygroup/all/:bid',['BuyTogether\Controller\GroupController','allOrdersChange'],
+	['require' =>['bid' => '\d+']]
+);
 $mux->any('/user/myjoin/:jid',['BuyTogether\Controller\GroupController','myJoin'],
 	['require' =>['jid' => '\d+']]
+);
+$mux->any('/user/uploadjoinimg/:jid',['BuyTogether\Controller\GroupController','uploadJoinImg'],
+	['require' =>['jid' => '\d+']]
+);
+$mux->get('/joinimages/:token',['BuyTogether\Controller\GroupController','showJoinImg']);
+$mux->any('/user/groupstatus/:bid',['BuyTogether\Controller\GroupController','groupStatus'],
+	['require' =>['bid' => '\d+']]
 );
 
 return $mux;

@@ -89,4 +89,26 @@ CREATE TABLE `userimg` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 2014-10-07 14:25:42
+DROP TABLE IF EXISTS `post`;
+CREATE TABLE `post` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` text NOT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL,
+  `tid` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `create_time` (`create_time`),
+  KEY `update_time` (`update_time`),
+  KEY `tid` (`tid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `thread`;
+CREATE TABLE `thread` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `title` (`title`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 2014-10-21 17:50:00

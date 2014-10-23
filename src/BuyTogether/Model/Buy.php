@@ -64,15 +64,15 @@ class Buy extends Seed
             $end = "open";
         }
         if ($class) {
-            $insert .= " AND `buy_Class` = '".$class. "'";
+            $insert .= " AND `buy_Class` = '$class'";
         }
         if ($area) {
-            $insert .= " AND `buy_Area` = '" .$area. "'";
+            $insert .= " AND `buy_Area` = '$area'";
         }
         if ($methor) {
-            $insert .= " AND `buy_Methor` = '" .$methor. "'";
+            $insert .= " AND `buy_Methor` = '$methor'";
         }
-        $sql = "SELECT `buy_Id` FROM `buy` WHERE `buy_End` = '".$end."'".$insert;
+        $sql = "SELECT `buy_Id` FROM `buy` WHERE `buy_End` = '$end'$insert";
         
         $db = self::getConfig()->getDb();
         $stmt = $db->prepare($sql);
@@ -163,7 +163,7 @@ class Buy extends Seed
         $sql = 'SELECT buy_Id, UNIX_TIMESTAMP(buy_Time), buy_Name, buy_Price, buy_OPrice, buy_Com, ';
         $sql .= 'buy_Det, buy_Owner, buy_Class, buy_Area, buy_End, buy_Q, buy_Num, buy_ConRun, buy_ConJoin, ';
         $sql .= 'buy_Methor, buy_Gname, buy_Gacc FROM `buy` WHERE `buy_Id` = ?';
-        
+
         $stmt = $db->prepare($sql);
         $stmt->bindValue(1, $id);
         $ret = null;

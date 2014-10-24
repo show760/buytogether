@@ -38,4 +38,5 @@
 3. `sudo service nginx restart` 
 4. buytogether->config->config.php and test.php，找`db`將資料庫設定完畢。
 5. 在設定好的資料庫匯入test->db.sql
-6. then it's work!! 
+6. 要使用上傳相片功能請依照config.php->upload_* 相關設定建立資料夾(在linux環境請把資料夾權限設為777)
+7. then it's work!! 

@@ -127,7 +127,6 @@ class UserController extends Seed
                     } else {
                         $user = User::create($info);
                         if ($user instanceof User) {
-                            $op = null;
                                 $img = Img::create($_FILES["file"]["tmp_name"], 'upload_user');
                                 $userimg = UserImg::create($user, $img);
                                 $session = new PhpSession;
@@ -141,7 +140,9 @@ class UserController extends Seed
                             $msg = array( 'status' => false, 'Unknown error. please try again.');
                         }
                     }
-                    $msg = ImgLibrary::imgError($op);
+                    if ($op !== null) {
+                        $msg = ImgLibrary::imgError($op);
+                    }
                 }
             }
             return self::getConfig()->getTmpl()->render('register.html', $msg);

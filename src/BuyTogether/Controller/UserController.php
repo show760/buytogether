@@ -4,7 +4,7 @@ namespace BuyTogether\Controller;
 use Fruit\Seed;
 use BuyTogether\Model\User;
 use BuyTogether\Model\Img;
-use BuyTogether\Model\UserImg;
+use BuyTogether\Model\ImgPlus;
 use BuyTogether\Model\Buy;
 use BuyTogether\Model\Join;
 use BuyTogether\Library\ImgLibrary;
@@ -128,7 +128,7 @@ class UserController extends Seed
                         $user = User::create($info);
                         if ($user instanceof User) {
                                 $img = Img::create($_FILES["file"]["tmp_name"], 'upload_user');
-                                $userimg = UserImg::create($user, $img);
+                                $imgplus = ImgPlus::create($img, null, $user);
                                 $session = new PhpSession;
                                 $session->set('user', $user->getToken());
                                 $msg = array(
@@ -200,23 +200,5 @@ class UserController extends Seed
             $msg = array( 'status' => false, 'string' => '登出失敗請稍後再試');
             return self::getConfig()->getTmpl()->render('logout.html', $msg);
         }
-    }
-
-    public function showUserImg($token = null)
-    {
-        $userimg = UserImg::loadByUid($token);
-        $gid = $userimg->getGid();
-        $img = Img::load($gid);
-        if (!$img instanceof Img) {
-            return json_encode(
-                array(
-                    'status' => false,
-                    'msg'    => '查無照片'
-                )
-            );
-        }
-
-        header('Content-Type: '.$img->getMime());
-        $img->readFile();
     }
 }

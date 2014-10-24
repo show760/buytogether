@@ -47,47 +47,33 @@ CREATE TABLE `img` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `buyimg`;
-CREATE TABLE `buyimg` (
+DROP TABLE IF EXISTS `imgplus`;
+CREATE TABLE `imgplus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bid` int(11) NOT NULL,
-  `gid` varchar(128) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `joinimg`;
-CREATE TABLE `joinimg` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `jid` int(11) NOT NULL,
+  `bid` int(11) DEFAULT NULL,
+  `uid` int(11) DEFAULT NULL,
+  `jid` int(11) DEFAULT NULL,
   `gid` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `members`;
-CREATE TABLE `members` (
-  `members_Id` int(11) NOT NULL AUTO_INCREMENT,
-  `members_EMAIL` varchar(30) NOT NULL,
-  `members_PASSWORD` varchar(20) NOT NULL,
-  `members_NAME` varchar(20) NOT NULL,
-  `members_BIRTH` varchar(10) NOT NULL,
-  `members_POWER` varchar(5) NOT NULL DEFAULT '正常',
-  `members_ADDRESS` tinytext NOT NULL,
-  `members_COUNTIES` varchar(4) NOT NULL,
-  `members_RUN` int(11) NOT NULL DEFAULT '0',
-  `members_JOIN` int(11) NOT NULL DEFAULT '0',
-  `members_MAIN` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`members_Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `userimg`;
-CREATE TABLE `userimg` (
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` int(11) NOT NULL,
-  `gid` varchar(128) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `birth` varchar(10) NOT NULL,
+  `power` varchar(5) NOT NULL DEFAULT '正常',
+  `address` tinytext NOT NULL,
+  `counties` varchar(4) NOT NULL,
+  `run` int(11) NOT NULL DEFAULT '0',
+  `join` int(11) NOT NULL DEFAULT '0',
+  `main` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS `post`;
 CREATE TABLE `post` (

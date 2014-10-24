@@ -8,7 +8,8 @@ use BuyTogether\Model\Buy;
 use BuyTogether\Model\User;
 use BuyTogether\Model\Img;
 use BuyTogether\Model\Join;
-use BuyTogether\Model\BuyImg;
+use BuyTogether\Model\ImgPlus;
+use BuyTogether\Model\Thread;
 use BuyTogether\Library\ImgLibrary;
 
 class BuyController extends Seed
@@ -72,12 +73,16 @@ class BuyController extends Seed
                 $buy = Buy::create($info);
                 $img = Img::create($_FILES["file"]["tmp_name"], 'upload_group');
                 if ($buy instanceof Buy and $img instanceof Img) {
-                    $buyimg = BuyImg::create($buy, $img);
-                    if ($buyimg instanceof Buyimg) {
+                    $imgplus = ImgPlus::create($img, $buy);
+                    if ($imgplus instanceof imgplus) {
+                        $thread = Thread::create("{$buy->getName()}團購討論串，有問題可以在這邊發問");
                         $user = User::load($session->get('user'));
                         $user->setMain($user->getMain() + 1);
                         $user->save();
                         $msg = array( 'status' => true, 'string' => '新增團購成功');
+                        return self::getConfig()->getTmpl()->render('startform.html', $msg);
+                    } else {
+                        $msg = array( 'status' => false, 'string' => '團購與圖片連結失敗');
                         return self::getConfig()->getTmpl()->render('startform.html', $msg);
                     }
                 } else {
@@ -87,29 +92,5 @@ class BuyController extends Seed
             $msg = ImgLibrary::imgError($op);
             return self::getConfig()->getTmpl()->render('startform.html', $msg);
         }
-    }
-
-    /**
-     * 用photoToken取得image
-     *
-     * @param  mixed buy token $token
-     * @return image or null
-     */
-    public function showImg($token = null)
-    {
-        $buyimg = BuyImg::loadByBid($token);
-        $gid = $buyimg->getGid();
-        $img = Img::load($gid);
-        if (!$img instanceof Img) {
-            return json_encode(
-                array(
-                    'status' => false,
-                    'msg'    => '查無照片'
-                )
-            );
-        }
-
-        header('Content-Type: '.$img->getMime());
-        $img->readFile();
     }
 }

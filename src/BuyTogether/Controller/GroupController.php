@@ -4,9 +4,8 @@ namespace BuyTogether\Controller;
 use Fruit\Seed;
 use BuyTogether\Model\User;
 use BuyTogether\Model\Img;
-use BuyTogether\Model\UserImg;
 use BuyTogether\Model\Buy;
-use BuyTogether\Model\JoinImg;
+use BuyTogether\Model\ImgPlus;
 use BuyTogether\Model\Join;
 use BuyTogether\Library\ImgLibrary;
 use Fruit\Session\PhpSession;
@@ -180,8 +179,8 @@ class GroupController extends Seed
             $join = Join::load($jid);
             $img = Img::create($_FILES["file"]["tmp_name"], 'upload_join');
             if ($join instanceof Join && $img instanceof Img) {
-                $joinimg = JoinImg::create($join, $img);
-                if ($joinimg instanceof Joinimg) {
+                $imgplus = ImgPlus::create($img, null, null, $join);
+                if ($imgplus instanceof imgplus) {
                     $msg = array(
                         'status' => true,
                         'string' => '上傳匯款收據成功',
@@ -196,28 +195,5 @@ class GroupController extends Seed
         $msg = ImgLibrary::imgError($op);
         $msg['jid'] = $jid;
         return self::getConfig()->getTmpl()->render('myjoin.html', $msg);
-    }
-    /**
-     * 用photoToken取得image
-     *
-     * @param  mixed buy token $token
-     * @return image or null
-     */
-    public function showJoinImg($token = null)
-    {
-        $joinimg = JoinImg::loadByJid($token);
-        $gid = $joinimg->getGid();
-        $img = Img::load($gid);
-        if (!$img instanceof Img) {
-            return json_encode(
-                array(
-                    'status' => false,
-                    'msg'    => '查無照片'
-                )
-            );
-        }
-
-        header('Content-Type: '.$img->getMime());
-        $img->readFile();
     }
 }

@@ -11,8 +11,8 @@
     <file>test/BuyTogetherTest/Model/BuyTest.php</file>
     <file>test/BuyTogetherTest/Model/JoinTest.php</file>
     <file>test/BuyTogetherTest/Model/ImgTest.php</file>
-    <file>test/BuyTogetherTest/Model/BuyImgTest.php</file>
     <file>test/BuyTogetherTest/Model/UserTest.php</file>
+    <file>test/BuyTogetherTest/Model/ImgPlusTest.php</file>
   </testsuite>
 </testsuites>
 <filter>

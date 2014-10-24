@@ -2,9 +2,61 @@
 namespace Buytogether\Library;
 
 use BuyTogether\Model\Img;
+use BuyTogether\Model\ImgPlus;
 
 class ImgLibrary
 {
+    public function showImgByUid($token = null)
+    {
+        $imgplus = ImgPlus::loadByUid($token);
+        $gid = $imgplus->getGid();
+        $img = Img::load($gid);
+        if (!$img instanceof Img) {
+            return json_encode(
+                array(
+                    'status' => false,
+                    'msg'    => '查無照片'
+                )
+            );
+        }
+        header('Content-Type: '.$img->getMime());
+        $img->readFile();
+    }
+
+    public function showImgByBid($token = null)
+    {
+        $imgplus = ImgPlus::loadByBid($token);
+        $gid = $imgplus->getGid();
+        $img = Img::load($gid);
+        if (!$img instanceof Img) {
+            return json_encode(
+                array(
+                    'status' => false,
+                    'msg'    => '查無照片'
+                )
+            );
+        }
+        header('Content-Type: '.$img->getMime());
+        $img->readFile();
+    }
+
+    public function showImgByJid($token = null)
+    {
+        $imgplus = ImgPlus::loadByJid($token);
+        $gid = $imgplus->getGid();
+        $img = Img::load($gid);
+        if (!$img instanceof Img) {
+            return json_encode(
+                array(
+                    'status' => false,
+                    'msg'    => '查無照片'
+                )
+            );
+        }
+        header('Content-Type: '.$img->getMime());
+        $img->readFile();
+    }
+
     public static function imgError($op = null)
     {
         switch ($op) {

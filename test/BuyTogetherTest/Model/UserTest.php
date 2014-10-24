@@ -31,15 +31,15 @@ class UserTest extends PHPUnit_Extensions_Database_TestCase
     {
         return new DataSet(
             [
-                'members' => [
+                'user' => [
                     [
-                        'members_Id' => 1,
-                        'members_EMAIL' => '123@hotmail.com',
-                        'members_PASSWORD' => '123',
-                        'members_NAME' => 'testName',
-                        'members_BIRTH' => '199800101',
-                        'members_ADDRESS' => '台北大安',
-                        'members_COUNTIES' => '台北'
+                        'id' => 1,
+                        'email' => '123@hotmail.com',
+                        'password' => '123',
+                        'name' => 'testName',
+                        'birth' => '199800101',
+                        'address' => '台北大安',
+                        'counties' => '台北'
                     ]
                 ]
             ]
@@ -50,19 +50,19 @@ class UserTest extends PHPUnit_Extensions_Database_TestCase
     {
         return new DataSet(
             [
-                'members' => [
+                'user' => [
                     [
-                        'members_Id' => 1,
-                        'members_EMAIL' => '123@hotmail.com',
-                        'members_PASSWORD' => '321',
-                        'members_NAME' => 'testName2',
-                        'members_BIRTH' => '19980228',
-                        'members_POWER' => '正常',
-                        'members_ADDRESS' => '台中豐原',
-                        'members_COUNTIES' => '台中',
-                        'members_RUN' => 0,
-                        'members_JOIN' => 0,
-                        'members_MAIN' => 0
+                        'id' => 1,
+                        'email' => '123@hotmail.com',
+                        'password' => '321',
+                        'name' => 'testName2',
+                        'birth' => '19980228',
+                        'power' => '正常',
+                        'address' => '台中豐原',
+                        'counties' => '台中',
+                        'run' => 0,
+                        'join' => 0,
+                        'main' => 0
                     ]
                 ]
             ]
@@ -71,15 +71,15 @@ class UserTest extends PHPUnit_Extensions_Database_TestCase
 
     public function testCreate()
     {
-        $this->assertEquals(1, $this->getConnection()->getRowCount('members'), 'Pre-Condition');
+        $this->assertEquals(1, $this->getConnection()->getRowCount('user'), 'Pre-Condition');
         $ret = User::create($this->info);
         $this->assertInstanceOf('BuyTogether\Model\User', $ret);
-        $this->assertEquals(2, $this->getConnection()->getRowCount('members'), 'Inserting failed');
+        $this->assertEquals(2, $this->getConnection()->getRowCount('user'), 'Inserting failed');
     }
 
     public function testGet()
     {
-        $this->assertEquals(1, $this->getConnection()->getRowCount('members'), 'Pre-Condition');
+        $this->assertEquals(1, $this->getConnection()->getRowCount('user'), 'Pre-Condition');
         $ret = User::load(1);
         $this->assertInstanceOf('BuyTogether\Model\User', $ret, 'User loading failed');
         $ret = User::load(2);
@@ -88,18 +88,18 @@ class UserTest extends PHPUnit_Extensions_Database_TestCase
 
     public function testDelete()
     {
-        $this->assertEquals(1, $this->getConnection()->getRowCount('members'), 'Pre-Condition');
+        $this->assertEquals(1, $this->getConnection()->getRowCount('user'), 'Pre-Condition');
         $ret = User::load(1);
         $ret->delete();
         $this->assertNull($ret->getToken(), 'Does not clear token after deleting');
-        $this->assertEquals(0, $this->getConnection()->getRowCount('members'), 'Deleting failed');
+        $this->assertEquals(0, $this->getConnection()->getRowCount('user'), 'Deleting failed');
         $ret->delete();
-        $this->assertEquals(0, $this->getConnection()->getRowCount('members'), 'Unknown record deleted');
+        $this->assertEquals(0, $this->getConnection()->getRowCount('user'), 'Unknown record deleted');
     }
 
     public function testUpdate()
     {
-        $this->assertEquals(1, $this->getConnection()->getRowCount('members'), 'Pre-Condition');
+        $this->assertEquals(1, $this->getConnection()->getRowCount('user'), 'Pre-Condition');
         $ret = User::load(1);
         $ret->setPass('321');
         $ret->setName('testName2');
@@ -107,8 +107,8 @@ class UserTest extends PHPUnit_Extensions_Database_TestCase
         $ret->setAddress('台中豐原');
         $ret->setCounties('台中');
         $ret->save();
-        $actual = $this->getConnection()->createQueryTable('members', 'SELECT * FROM `members` WHERE `members_Id` = 1');
-        $expect = $this->getUpdatedDataSet()->getTable('members');
+        $actual = $this->getConnection()->createQueryTable('user', 'SELECT * FROM `user` WHERE `id` = 1');
+        $expect = $this->getUpdatedDataSet()->getTable('user');
         $this->assertTablesEqual($expect, $actual, 'update failed');
         $ret->delete();
         $ret->save();

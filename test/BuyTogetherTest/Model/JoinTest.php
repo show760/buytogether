@@ -43,24 +43,24 @@ class JoinTest extends PHPUnit_Extensions_Database_TestCase
                         'buy_Gacc' => 'test gacc'
                     ]
                 ],
-                'members' => [
+                'user' => [
                     [
-                        'members_Id' => 1,
-                        'members_EMAIL' => '123@hotmail.com',
-                        'members_PASSWORD' => '123',
-                        'members_NAME' => 'testName',
-                        'members_BIRTH' => '199800101',
-                        'members_ADDRESS' => '台北大安',
-                        'members_COUNTIES' => '台北'
+                        'id' => 1,
+                        'email' => '123@hotmail.com',
+                        'password' => '123',
+                        'name' => 'testName',
+                        'birth' => '199800101',
+                        'address' => '台北大安',
+                        'counties' => '台北'
                     ],
                     [
-                        'members_Id' => 2,
-                        'members_EMAIL' => 'show760@hotmail.com',
-                        'members_PASSWORD' => '123',
-                        'members_NAME' => 'testName',
-                        'members_BIRTH' => '19920520',
-                        'members_ADDRESS' => '台中大雅',
-                        'members_COUNTIES' => '台中'
+                        'id' => 2,
+                        'email' => 'show760@hotmail.com',
+                        'password' => '123',
+                        'name' => 'testName',
+                        'birth' => '19920520',
+                        'address' => '台中大雅',
+                        'counties' => '台中'
                     ]
                 ],
                 'join' => [

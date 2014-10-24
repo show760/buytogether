@@ -16,7 +16,6 @@ $mux->get('/buy/view/:b', ['BuyTogether\Controller\BuyController','view'],
     ['require' => ['b' => '\d+']]
 );
 $mux->any('/buy/start', ['BuyTogether\Controller\BuyController','start']);
-$mux->get('/images/:token',['BuyTogether\Controller\BuyController','showImg']);
 /**
  * Join
  */
@@ -35,7 +34,6 @@ $mux->any('/user/register', ['BuyTogether\Controller\UserController','addUser'])
 $mux->any('/user/view',['BuyTogether\Controller\UserController','view']);
 $mux->any('/user/login',['BuyTogether\Controller\UserController','login']);
 $mux->get('/user/logout',['BuyTogether\Controller\UserController','logout']);
-$mux->get('/userimages/:token',['BuyTogether\Controller\UserController','showUserImg']);
 /* Group */
 $mux->any('/user/mylist',['BuyTogether\Controller\GroupController','myList']);
 $mux->any('/user/mygroup/:bid',['BuyTogether\Controller\GroupController','myGroup'],
@@ -50,9 +48,12 @@ $mux->any('/user/myjoin/:jid',['BuyTogether\Controller\GroupController','myJoin'
 $mux->any('/user/uploadjoinimg/:jid',['BuyTogether\Controller\GroupController','uploadJoinImg'],
 	['require' =>['jid' => '\d+']]
 );
-$mux->get('/joinimages/:token',['BuyTogether\Controller\GroupController','showJoinImg']);
 $mux->any('/user/groupstatus/:bid',['BuyTogether\Controller\GroupController','groupStatus'],
 	['require' =>['bid' => '\d+']]
 );
+/*ImgPlus*/
+$mux->get('/images/:token',['BuyTogether\Library\ImgLibrary','showImgByBid']);
+$mux->get('/userimages/:token',['BuyTogether\Library\ImgLibrary','showImgByUid']);
+$mux->get('/joinimages/:token',['BuyTogether\Library\ImgLibrary','showImgByJid']);
 
 return $mux;

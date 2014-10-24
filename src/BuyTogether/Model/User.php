@@ -37,8 +37,7 @@ class User extends Seed
     public static function create($info)
     {
         $db = self::getConfig()->getDb();
-        $sql = 'INSERT INTO `members` (members_EMAIL, members_PASSWORD, members_NAME, members_BIRTH, ';
-        $sql .= 'members_ADDRESS, members_COUNTIES) VALUES(?,?,?,?,?,?)';
+        $sql = 'INSERT INTO `user` (email, password, name, birth, address, counties) VALUES(?,?,?,?,?,?)';
 
         $stmt = $db->prepare($sql);
         $stmt->bindValue(1, $info['email']);
@@ -61,9 +60,8 @@ class User extends Seed
     public static function load($mid)
     {
         $db = self::getConfig()->getDb();
-        $sql = 'SELECT members_EMAIL, members_PASSWORD, members_NAME, members_BIRTH, members_POWER, ';
-        $sql .= 'members_ADDRESS, members_COUNTIES, members_RUN, members_JOIN, members_MAIN FROM ';
-        $sql .= 'members WHERE `members_Id` = ?';
+        $sql = 'SELECT `email`, `password`, `name`, `birth`, `power`, `address`, `counties`, `run`, `join`, `main` ';
+        $sql .= 'FROM `user` WHERE id = ?';
 
         $stmt = $db->prepare($sql);
         $stmt->bindValue(1, $mid);
@@ -82,7 +80,7 @@ class User extends Seed
     public function delete()
     {
         $db = self::getConfig()->getDb();
-        $sql = 'DELETE FROM `members` WHERE members_Id = ?';
+        $sql = 'DELETE FROM `user` WHERE id = ?';
 
         $stmt = $db->prepare($sql);
         $stmt->bindValue(1, $this->id);
@@ -97,9 +95,8 @@ class User extends Seed
     public function save()
     {
         $db = self::getConfig()->getDb();
-        $sql = 'UPDATE `members` SET `members_PASSWORD` = ?, `members_NAME` = ?, `members_BIRTH` = ?, ';
-        $sql .= '`members_POWER` = ?, `members_ADDRESS` = ?, `members_COUNTIES` = ?, `members_RUN` = ?, ';
-        $sql .= '`members_JOIN` = ?, `members_MAIN` = ? WHERE `members_Id` = ?';
+        $sql = 'UPDATE `user` SET `password` = ?, `name` = ?, `birth` = ?, `power` = ?, `address` = ?, '
+        $sql .= '`counties` = ?, `run` = ?, `join` = ?, `main` = ? WHERE `id` = ?';
 
         $stmt = $db->prepare($sql);
         $stmt->bindValue(1, $this->pass);
@@ -217,7 +214,7 @@ class User extends Seed
     public static function listAll()
     {
         $db = self::getConfig()->getDb();
-        $sql = 'SELECT `members_Id` FROM members';
+        $sql = 'SELECT `id` FROM `user`';
         
         $stmt = $db->prepare($sql);
         $ret = null;
@@ -237,7 +234,7 @@ class User extends Seed
     public static function getIdByName($name)
     {
         $db = self::getConfig()->getDb();
-        $sql = 'SELECT `members_Id` FROM `members` WHERE `members_NAME` = ?';
+        $sql = 'SELECT `id` FROM `user` WHERE `name` = ?';
         
         $stmt = $db->prepare($sql);
         $stmt->bindValue(1, $name);
@@ -258,7 +255,7 @@ class User extends Seed
     public static function getIdByEmail($email)
     {
         $db = self::getConfig()->getDb();
-        $sql = 'SELECT `members_Id` FROM `members` WHERE `members_EMAIL` = ?';
+        $sql = 'SELECT `id` FROM `user` WHERE `email` = ?';
         
         $stmt = $db->prepare($sql);
         $stmt->bindValue(1, $email);

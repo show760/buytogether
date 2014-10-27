@@ -98,6 +98,22 @@ class Join extends Seed
         return $ret;
     }
 
+    public static function valid($bid, $uid) {
+        $db = self::getConfig()->getDb();
+        $sql = 'SELECT `id` FROM `join` WHERE `bid` = ? AND `uid` = ?';
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(1, $bid);
+        $stmt->bindValue(2, $uid);
+        $ret = null;
+
+        if ($stmt->execute()) {
+            $ret = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+        }
+        $stmt->closeCursor();
+        return $ret;
+    }
+
     public function getToken()
     {
         return $this->id;

@@ -3,7 +3,6 @@ namespace BuyTogether\Controller;
 
 use Exception;
 use Fruit\Seed;
-use Fruit\Model;
 use Fruit\Session\PhpSession;
 use BuyTogether\Model\Buy;
 use BuyTogether\Model\User;

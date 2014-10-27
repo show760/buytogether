@@ -95,7 +95,7 @@ class User extends Seed
     public function save()
     {
         $db = self::getConfig()->getDb();
-        $sql = 'UPDATE `user` SET `password` = ?, `name` = ?, `birth` = ?, `power` = ?, `address` = ?, '
+        $sql = 'UPDATE `user` SET `password` = ?, `name` = ?, `birth` = ?, `power` = ?, `address` = ?, ';
         $sql .= '`counties` = ?, `run` = ?, `join` = ?, `main` = ? WHERE `id` = ?';
 
         $stmt = $db->prepare($sql);

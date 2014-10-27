@@ -13,6 +13,8 @@
     <file>test/BuyTogetherTest/Model/ImgTest.php</file>
     <file>test/BuyTogetherTest/Model/UserTest.php</file>
     <file>test/BuyTogetherTest/Model/ImgPlusTest.php</file>
+    <file>test/BuyTogetherTest/Model/ThreadTest.php</file>
+    <file>test/BuyTogetherTest/Model/PostTest.php</file>
   </testsuite>
 </testsuites>
 <filter>

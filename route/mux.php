@@ -56,4 +56,12 @@ $mux->get('/images/:token',['BuyTogether\Library\ImgLibrary','showImgByBid']);
 $mux->get('/userimages/:token',['BuyTogether\Library\ImgLibrary','showImgByUid']);
 $mux->get('/joinimages/:token',['BuyTogether\Library\ImgLibrary','showImgByJid']);
 
+/*Post*/
+$mux->get('/thread/:bid',['BuyTogether\Controller\PostController','showThread'],
+	['require' =>['bid' => '\d+']]
+);
+$mux->post('/thread/addpost',['BuyTogether\Controller\PostController','addPost']);
+$mux->any('/thread/editpost/:pid',['BuyTogether\Controller\PostController','editPost'],
+	['require' =>['pid' => '\d+']]
+);
 return $mux;

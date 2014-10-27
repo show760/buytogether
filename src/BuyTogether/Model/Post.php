@@ -1,6 +1,6 @@
 <?php
 
-namespace Buytogether\Model;
+namespace BuyTogether\Model;
 
 use PDO;
 use DateTime;
@@ -16,18 +16,22 @@ class Post extends Seed
     private $create_time;
     private $update_time;
     private $tid;
+    private $uid;
 
     private $thread_obj_cache;
+    private $user_obj_cache;
 
-    protected function __construct($i, $c, $r, $u, $t)
+    protected function __construct($i, $c, $r, $u, $t, $ui)
     {
         $this->id = $i;
         $this->content = $c;
         $this->create_time = $r;
         $this->update_time = $u;
         $this->tid = $t;
-        
+        $this->uid = $ui;
+
         $this->thread_obj_cache = null;
+        $this->user_obj_cache = null;
     }
 
     /**
@@ -37,14 +41,15 @@ class Post extends Seed
      * @param string $c post content
      * @return Post object, or null
      */
-    public static function create($t, $c)
+    public static function create($t, $u, $c)
     {
         $db = self::getConfig()->getDb();
-        $sql = 'INSERT INTO post (tid, content) VALUES (?,?)';
+        $sql = 'INSERT INTO post (tid, uid, content) VALUES (?,?,?)';
 
         $stmt = $db->prepare($sql);
         $stmt->bindValue(1, $t->getToken());
-        $stmt->bindValue(2, $c);
+        $stmt->bindValue(2, $u->getToken());
+        $stmt->bindValue(3, $c);
 
         if ($stmt->execute()) {
             $id = $db->lastInsertId();
@@ -65,7 +70,8 @@ class Post extends Seed
     public static function load($id)
     {
         $db = self::getConfig()->getDb();
-        $sql = 'SELECT content, UNIX_TIMESTAMP(create_time), UNIX_TIMESTAMP(update_time), tid FROM post WHERE id = ?';
+        $sql = 'SELECT content, UNIX_TIMESTAMP(create_time), UNIX_TIMESTAMP(update_time), tid,uid ';
+        $sql .= 'FROM `post` WHERE id = ?';
         
         $stmt = $db->prepare($sql);
         $stmt->bindValue(1, $id);
@@ -74,7 +80,7 @@ class Post extends Seed
         if ($stmt->execute()) {
             $res = $stmt->fetch(PDO::FETCH_NUM);
             if ($res != null) {
-                $ret = new self($id, $res[0], $res[1], $res[2], $res[3]);
+                $ret = new self($id, $res[0], $res[1], $res[2], $res[3], $res[4]);
             }
         }
 
@@ -160,6 +166,19 @@ class Post extends Seed
 
         return $this->thread_obj_cache;
     }
+    /**
+     * 取得留言人
+     *
+     * @return User object
+     */
+    public function getUser()
+    {
+        if ($this->user_obj_cache == null) {
+            $this->user_obj_cache = User::load($this->uid);
+        }
+
+        return $this->user_obj_cache;
+    }
 
     /**
      * 取得文章內容
@@ -171,6 +190,10 @@ class Post extends Seed
         return $this->content;
     }
 
+    public function getUid()
+    {
+        return $this->uid;
+    }
     /**
      * 修改文章
      *

@@ -82,10 +82,12 @@ CREATE TABLE `post` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL,
   `tid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `create_time` (`create_time`),
   KEY `update_time` (`update_time`),
-  KEY `tid` (`tid`)
+  KEY `tid` (`tid`),
+  KEY `uid` (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -95,6 +97,16 @@ CREATE TABLE `thread` (
   `title` varchar(128) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `title` (`title`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `threadplus`;
+CREATE TABLE `threadplus` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tid` int(11) NOT NULL,
+  `bid` int(11) DEFAULT NULL,
+  `uid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 2014-10-21 17:50:00

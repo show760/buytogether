@@ -2,7 +2,6 @@
 namespace BuyTogether\Controller;
 
 use Fruit\Seed;
-use Fruit\Model;
 use Fruit\Session\PhpSession;
 use BuyTogether\Model\Buy;
 use BuyTogether\Model\User;
@@ -10,6 +9,7 @@ use BuyTogether\Model\Img;
 use BuyTogether\Model\Join;
 use BuyTogether\Model\ImgPlus;
 use BuyTogether\Model\Thread;
+use BuyTogether\Model\ThreadPlus;
 use BuyTogether\Library\ImgLibrary;
 
 class BuyController extends Seed
@@ -76,6 +76,7 @@ class BuyController extends Seed
                     $imgplus = ImgPlus::create($img, $buy);
                     if ($imgplus instanceof imgplus) {
                         $thread = Thread::create("{$buy->getName()}團購討論串，有問題可以在這邊發問");
+                        $threadplus = ThreadPlus::create($thread, $buy);
                         $user = User::load($session->get('user'));
                         $user->setMain($user->getMain() + 1);
                         $user->save();

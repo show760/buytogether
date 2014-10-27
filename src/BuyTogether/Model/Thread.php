@@ -1,6 +1,6 @@
 <?php
 
-namespace Buytogether\Model;
+namespace BuyTogether\Model;
 
 use PDO;
 use Fruit\Seed;
@@ -11,13 +11,15 @@ use Fruit\Seed;
 class Thread extends Seed
 {
     private $id;
-
     private $title;
+
+    private $threadplus_obj_cache;
 
     protected function __construct ($i, $t)
     {
         $this->id = $i;
         $this->title = $t;
+        $this->threadplus_obj_cache = null;
     }
 
     /**
@@ -173,5 +175,18 @@ class Thread extends Seed
         }
         $stmt->closeCursor();
         return $ret;
+    }
+
+    /**
+     * 取得討論串資料
+     *
+     * @return ThreadPlus object
+     */
+    public function getThreadPlus()
+    {
+        if ($this->threadplus_obj_cache == null) {
+            $this->threadplus_obj_cache = ThreadPlus::loadByTid($this->id);
+        }
+        return $this->threadplus_obj_cache;
     }
 }

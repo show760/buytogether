@@ -60,6 +60,9 @@ $mux->get('/joinimages/:token',['BuyTogether\Library\ImgLibrary','showImgByJid']
 $mux->get('/thread/:bid',['BuyTogether\Controller\PostController','showThread'],
 	['require' =>['bid' => '\d+']]
 );
+$mux->get('/thread/deletepost/:pid',['BuyTogether\Controller\PostController','deletePost'],
+	['require' =>['pid' => '\d+']]
+);
 $mux->post('/thread/addpost',['BuyTogether\Controller\PostController','addPost']);
 $mux->any('/thread/editpost/:pid',['BuyTogether\Controller\PostController','editPost'],
 	['require' =>['pid' => '\d+']]

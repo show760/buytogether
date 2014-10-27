@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <title>Buytogether - Group Threads</title>
     {% if status == false and string %}
+        {% if string == '你沒有權限刪除該留言' %}
+    <script language="JavaScript">
+        alert('{{string}}')
+        window.location.replace('/thread/{{buy.token}}')
+    </script>
+        {% else %}
     <script language="JavaScript">
         alert('{{string}}')
         window.location.replace('/')
     </script>
+        {% endif %}
     {% elseif status == true and string %}
         <script language="JavaScript">
         alert('{{string}}')
@@ -62,7 +69,8 @@
                                     {{p.content}}
                                 </td>
                                 <td align="right">
-                                    {% if p.usertoken == user %}<a href="/thread/editpost/{{p.token}}"><font color="green">修改留言</font></a>{% endif %}
+                                    {% if p.usertoken == user %}<a href="/thread/editpost/{{p.token}}"><font color="green">修改</font></a>
+                                    ｜<a href="/thread/deletepost/{{p.token}}"><font color="green">X</font></a>{% endif %}
                                 </td>
                         </table>
                     </td>

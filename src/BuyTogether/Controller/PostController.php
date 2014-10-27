@@ -67,6 +67,32 @@ class PostController extends Seed
         }
             return self::getConfig()->getTmpl()->render('editpost.html', $msg);
     }
+
+    public function deletePost($pid)
+    {
+        $session = new PhpSession;
+        $post = Post::load($pid);
+        if ($post instanceof Post) {
+            $thread = $post->getThread();
+            $threadplus = $thread->getThreadPlus();
+            if ($session->get('user') == $post->getUid()) {
+                $post->delete();
+                $msg = array(
+                    'status' => true,
+                    'string' => '刪除留言成功',
+                    'buy.token' => $threadplus->getBid()
+                );
+            } else {
+                $msg = array(
+                    'status' => false,
+                    'string' => '你沒有權限刪除該留言',
+                    'token' => $threadplus->getBid()
+                );
+            }
+            return self::getConfig()->getTmpl()->render('groupthread.html', $msg);
+        }
+    }
+
     public function showThread($bid)
     {
         $session = new PhpSession;

@@ -159,7 +159,7 @@ class GroupController extends Seed
                         $msg['buy']['gacc'] = $buy->getGacc();
                     }
                 }
-                $joins = Join::listByBid($j->getBid());
+                $joins = Join::valid($j->getBid(), $j->getUid());
                 foreach ($joins as $key => $value) {
                     $join = Join::load($value);
                     $msg['join'][$key]['token'] = $join->getToken();

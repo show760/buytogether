@@ -98,7 +98,8 @@ class Join extends Seed
         return $ret;
     }
 
-    public static function valid($bid, $uid) {
+    public static function valid($bid, $uid)
+    {
         $db = self::getConfig()->getDb();
         $sql = 'SELECT `id` FROM `join` WHERE `bid` = ? AND `uid` = ?';
 

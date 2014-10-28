@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buytogether</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body background="/_images/wrapper-bg.jpg" >
+<table align='center' border='0' width="1000">
+<div>{{ include('top.html') }}</div>
+</table>
+<br />
+<hr width="1000">
+<br />
+<table align='center'>
+    <tr>
+        <td>
+            <font id="eoq" color="green"><u>最小年總成本訂購量</u></font>｜<font id="eoqp" color="green"><u>經濟生產批量</u></font>｜<font id="eoqd" color="green"><u>數量折扣</u></font>｜<font id="conps" color="green"><u>隨機需求單一週期存貨模式</u></font>
+        </td>
+    </tr>
+</table>
+<br />
+<br />
+<table align='center' style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 90%; border: 0px solid #624d48; text-align:left; '>
+    <tr>
+        <td colspan="3" align="center">
+            <font color="624d48" size="4">透過上面四種計算方式，能於各種情境下幫助團主找出最合適的訂購數量。</font><br /><br /><br />
+        </td>
+    <tr align="center">
+        <td style="width: 35%;" >
+        <div id ="left"></div>
+        </td>
+        <td style="width: 30%;">
+            <div id="main" align="left">
+            </div>
+        </td>
+        <td style="width: 35%;">
+        <div id="right"></div>
+        </td>
+</table>
+
+</body>
+<script>
+    $(function() {
+        var eoq = $('#eoq');
+        eoq.click(function(){
+            $('#main').html("<h3 align='center'>計算最小年總成本訂購量</h3><form id='forms'><div>需求數量(D)&nbsp;&nbsp;：<input id='demands' type ='text' name='demand' size='10'></div><div>訂購成本(Co)：<input id='cos' type ='text' name='co' size='10'><font id='countco' color='624d48'>預估訂購成本</font></div><div>持有成本(Ch)：<input id='chs' type ='text' name='ch' size='10'><font id='countco' color='624d48'>預估持有成本</div><div align='center'><button type='submit' id='submits'>送出</button></div></form><br /><br />");
+        });
+        $('#main').on('click','#countco', function(){
+            $('#right').html("<div id ='co_list'><span id='test'>此成本與訂購量無關為每次進行團購預計會花費的成本<br>包含報價單以及訂單的處理，<br>其中包括存款、郵費、電話費、交通費</span><form id='councoforms'><input id=co1 type='text' placeholder='訂購貨品的人力成本'><br><input id=co2 type='text' placeholder='郵費'><br><input id=co3 type='text' placeholder='聯絡的電話費'><br><input id=co4 type='text' placeholder='交通費'><br><input id=co5 type='text' placeholder='其他可能的支出'><div align='center'><button type='submit' id='cosubmits'>計算</button></div></form></div>");
+        });
+        $('#right').on('click','#test', function(){
+            alert('test');
+        });
+
+
+        // $('body div .sel').val('');
+        // $('body div .sel').click()
+        // $('body div .sel').change(function(){
+        //     $('#xxx').html('<div id="ddwdw">321</div>');
+        // });
+        // $('#ddwdw').click(function(){
+        //     alert('test');
+        // })
+        // $('document').on('click','#ddwdw', function(){
+        //     alert('test');
+        // })
+        // $('#submits').click(function(){
+        //     $.ajax({
+        //         url: 'http://aboard/useralbumplus/login',
+        //         data: {
+        //             'name':'dewde',
+        //             'pass':'dewfdwe'
+        //                 },
+        //         type:"POST",
+        //         dataType:'json',
+        //         success: function(data){
+        //             $('#names').val('');
+        //             $('#passs').val('');
+        //             $('#xxx').html(data.msg);
+        //         },
+        //         error:function(xhr, ajaxOptions, thrownError){
+        //             alert(xhr.status);
+        //             alert(thrownError);
+        //         }
+        //     });
+        //     return false;
+        // })
+    });
+</script>
+</html>

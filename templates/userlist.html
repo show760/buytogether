@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>會員資料</title>
+    <meta charset="UTF-8">
+    <title>會員資料</title>
 {% if user == 0 %}
-	<script language="JavaScript">
-		alert('請先登入')
-		window.location.replace('/index')
-	</script>
+    <script language="JavaScript">
+        alert('請先登入')
+        window.location.replace('/index')
+    </script>
 {% endif %}
+<style>
+body{
+    overflow-y:scroll;
+}
+</style>
 </head>
 <body background="/_images/wrapper-bg.jpg">
 <table align='center' border='0' width="1000">
-	 <div>{{ include('top.html') }}</div>
+     <div>{{ include('top.html') }}</div>
 </table>
-	<h3 align="center">
-		<a style="color:black;" href="/user/view">會員資料</a>
-		<a style="color:black;" href="/">檢舉會員</a>
-	</h3>
+    <div align="center">
+        <a style="color:black;" href="/user/view"><font size="5" color="624d48">會員資料</font></a>
+        <a style="color:black;" href="/"><font size="5" color="624d48">檢舉會員</font></a>
+    </div>
 </body>
 </htmi>

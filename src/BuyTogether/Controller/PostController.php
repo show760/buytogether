@@ -97,7 +97,9 @@ class PostController extends Seed
     {
         $session = new PhpSession;
         $joins = Join::valid($bid, $session->get('user'));
-        if ($joins) {
+        $buy = Buy::load($bid);
+        $uid = User::getIdByEmail($buy->getOwner()); 
+        if ($joins or ($uid == $session->get('user'))) {
             $threadplus = ThreadPlus::loadByBid($bid);
             $thread = $threadplus->getThread();
             $buy =$threadplus->getBuy();

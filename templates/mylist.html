@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>我的團購</title>
+<style>
+body{
+    overflow-y:scroll;
+}
+</style>
 </head>
 <body background="/_images/wrapper-bg.jpg">
 <table align='center' border='0' width="1000">
@@ -39,7 +44,7 @@
         <td height='30'>{{b.name}}</td>
         <td height='30'>{{b.identity}}</td>
         <td height='30'>
-            <a href="/user/mygroup/{{b.token}}">查看</a>
+            <a href="/user/mygroup/{{b.token}}"><font color="green">查看</font></a>
         </td>
   {% endfor %}
 {% endif %}
@@ -51,7 +56,7 @@
         <td height='30'>{{j.name}}</td>
         <td height='30'>{{j.identity}}</td>
         <td height='30'>
-            <a href="/user/myjoin/{{j.token}}">查看</a>
+            <a href="/user/myjoin/{{j.token}}"><font color="green">查看</font></a>
         </td>
   {% endfor %}
 {% endif %}

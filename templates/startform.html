@@ -32,33 +32,33 @@ body{
 </table>
 <br />
 	<form name="start" method="POST" enctype="multipart/form-data" action="/buy/start">
-		<table border=0  align = "center"style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 700px; border: 0px solid #624d48; text-align:left; '>
+		<table border=0  align = "center"style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:20px; width: 700px; border: 0px solid #624d48; text-align:left; border-radius: 50px;'>
 			<tr bgcolor= '#91C7FF'>
-				<td align='left' width="300">
+				<td align='left' width="300" style='border-top-left-radius: 20px; padding:10px;'>
 					團購名稱：<input type="text" name="info[name]" width="20" />
 				</td>
-				<td align='left'>
+				<td align='left' style='border-top-right-radius: 20px; padding:10px;'>
 					上傳團購圖片：<input type="file" name="file">
 				</td>
 			</tr>
 			<tr bgcolor= '#91C7FF' >
-				<td align='left'>
+				<td align='left' style='padding:10px;'>
 					團購人數：<input type="text" name="info[quantity]" width="20" value={{qua}} >
 				</td>
-				<td align='center'>
+				<td align='center' style='padding:10px;'>
 					<a href='{$_SERVER['PHP_SELF']}?op=conps_list&from=start'>決策小工具</a>
 				</td>
 			</tr>
 			<tr bgcolor= '#91C7FF'>
-				<td align='left'>
+				<td align='left' style='padding:10px;'>
 					團購價格：<input type="text" name="info[price]" width="20" />
 				</td>
-				<td align='left'>
+				<td align='left' style='padding:10px;'>
 					商品原價：<input type="text" name="info[oprice]" size="20">
 				</td>
 			</tr>
 			<tr bgcolor= '#91C7FF'>
-				<td align='left'>
+				<td align='left' style='padding:10px;'>
 					團購類型：
 					<select size='1' name='info[class]'>
 						<option value='gooduse' selected>找好用
@@ -66,24 +66,24 @@ body{
 						<option value='goodeat'>找好吃
 					</select>
 				</td>
-				<td align='left'>
+				<td align='left' style='padding:10px;'>
 					團購地區：<input type="text" name="info[area]" size="20">
 				</td>
 			</tr>
 			<tr bgcolor= '#91C7FF'>
-				<td  colspan='2' align='left'>
+				<td  colspan='2' align='left' style='padding:10px;'>
 					<font size="3">請確認你的信箱為：
 						<font size="3" color="red"><b>{{useremail}}</b></font>
 						(如果這不是你的信箱,請重新登入)</font>
 				</td></tr>
 			<tr bgcolor= '#91C7FF'>
-				<td  colspan='2' align='center'>
+				<td  colspan='2' align='center' style='padding:10px;'>
 					團購簡介：<br>
 						 <textarea name="info[com]" rows="5" cols="45">團購的簡介：顯示在團購列表中的標題，簡短的介紹</textarea><br>
 					團購詳細介紹：<br>
 					<textarea name="info[det]" rows="10" cols="45"></textarea></td></tr>
 			<tr bgcolor= '#CCBBFF'>
-				<td colspan='2' align='center'>
+				<td colspan='2' align='center' style='padding:10px;'>
 					<font size='4' color='EE0000' face='微軟正黑體'>
 						<B>限制條件 &nbsp; (不設限以下欄位可跳過)</B>
 					</font><BR>
@@ -92,7 +92,7 @@ body{
 				</td>
 			</tr>	
 			<tr bgcolor= '#FFAABB'>
-				<td colspan='2'align='center'>付款方式：
+				<td colspan='2'align='center' style='padding:10px;'>付款方式：
 					<select size='1' name='info[methor]'>
 						<option value='facetoface' selected>面交
 						<option value='remittance'>郵局匯款
@@ -106,7 +106,7 @@ body{
 					<br>
 				</td>
 			<tr bgcolor= '#FFAABB'>
-				<td colspan='2'align='center'>
+				<td colspan='2'align='center' style='padding:10px;'>
 					郵局帳號：<br>
 					<font size='4' color='EE0000' face='微軟正黑體'>
 						<B>如：131416-8-123456-7</B>
@@ -116,7 +116,7 @@ body{
 				</td>
 			</tr>		
 			<tr bgcolor= '#FFAABB'>
-				<td  colspan='2' align='center'>
+				<td  colspan='2' align='center' style='padding:10px;border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;'>
 					<input type='hidden' name='info[owner]' value='{{useremail}}'>
 					<INPUT TYPE="SUBMIT" VALUE="發起團購">
 					<INPUT TYPE="RESET" VALUE="重新輸入">

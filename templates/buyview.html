@@ -16,10 +16,11 @@ body{
 </table>
 {% if buy %}
 <form action='{$_SERVER['PHP_SELF']}' method='POST'>
-    <table align='center' style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 700px; border: 0px solid #624d48; text-align:left; '>
-    <tr bgcolor= '#CCBBFF'>
+    <table align='center' style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:20px; width: 700px; border: 0px solid #624d48; text-align:left; border-radius:50px; '>
+    <tr>
         <td align='center' colspan='2'>
-            <font size='6'><B> {{buy.name}} </B></font>
+        <div style="height:50px;width:680px;border:3px solid #624d48; padding:20px; border-radius: 30px; font-size:40px; color:#624d48;">
+            <B> {{buy.name}} </B></div>
         </td>
     </tr>
     <tr>
@@ -29,7 +30,7 @@ body{
     </tr>
     <tr>
         <td align='center' rowspan='5'>
-            <img border="1" width="300" height="300" src='/images/{{buy.token}}'>
+            <img style='height:300px;width:300px;border:3px solid #624d48; border-radius: 50px;'src='/images/{{buy.token}}'>
         </td>
     </tr>
     <tr>
@@ -57,9 +58,11 @@ body{
             <font face="微軟正黑體" size="4" color="FF9900"><B>團主：{{buy.owner}}</B></font>
         </td>
     </tr>
-    <tr bgcolor= '#CCBBFF'>
+    <tr>
         <td align='center' colspan='2'>
-            <font face='微軟正黑體' size='4'><B>團購地區:{{buy.area}}</B></font>
+            <div style="background: #CCBBFF; height:30px;width:680px;border:3px solid #624d48; padding:10px; border-radius: 30px; font-size:20px; color:#624d48;">
+            <B>團購地區:{{buy.area}}</B>
+            </div>
         </td>
     </tr>
 {% if buy.conrun != 0 or buy.conjoin != 0 %} 
@@ -96,26 +99,26 @@ body{
 {% if buy.end == 'before' %}
     <tr>
        <td align='center' colspan='2'>
-            <font color="red" size="4"><b>該團購已結束</b></font>
+            <div style="color:green; font-size:20px;"><b>該團購已結束</b></div>
         </td>
 {% else %}
     {% if user %}
     <tr>
         <td align='center' colspan='2'>
-            <a href="/buy/join/{{buy.token}}">加入團購</a>
+            <a href="/buy/join/{{buy.token}}" style="color:green; font-size:20px;">加入團購</a>
         </td>
     </tr>
     {% else %}
     <tr>
         <td align='center' colspan='2'>
-            <a href="/user/login">請先登入</a>
+            <a href="/user/login" style="color:green; font-size:20px;">請先登入</a>
         </td>
     </tr>
     {% endif %}
 {% endif %}
-    <tr bgcolor="#CCBBFF">
+    <tr>
         <td align="center" colspan="2">
-            <font size="4"><B>付款方式：{% if buy.methor == 'facetoface' %}面交{% else %}郵局匯款{% endif %}</B></font>
+            <div style="background: #CCBBFF; height:30px;width:680px;border:3px solid #624d48; padding:10px; border-radius: 30px; font-size:20px; color:#624d48;"><B>付款方式：{% if buy.methor == 'facetoface' %}面交{% else %}郵局匯款{% endif %}</B></div>
         </td>
     </tr>
     <tr>

@@ -19,7 +19,7 @@ body{
 			<marquee onMouseOver="this.stop()" onMouseOut="this.start()" scrollamount="10">
 {% for b in buy %}
 			<a href='/buy/view/{{b.token}}'>
-				<img  style="height:150px;width:150px;border-style:solid;border-width:1px;border-color:black;" src='/images/{{b.token}}' >
+				<img  style="height:150px;width:150px;border:1px solid #624d48;border-radius: 30px;" src='/images/{{b.token}}' >
 			</a>
 {% endfor %}
 			</marquee>
@@ -27,7 +27,7 @@ body{
 		</td>
 	</tr>
 </table>
-<table align='center' width='1000' style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 1000px; border: 0px solid #624d48; text-align:left; '>
+<table align='center' width='1000' style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 1000px; border: 0px solid #624d48; text-align:left; border-radius: 50px;'>
 {% set count = 0 %}
 {% if buy  %}
 {% for b in buy %}
@@ -39,29 +39,29 @@ body{
 			<table align="center" width="300">
 				<tr>
 					<td align="center" colspan="3" height="50">
-						<a style="color:black;" href='/buy/view/{{b.token}}'><font size='6' color="624d48"><B>{{b.name}}{{i}}</B></font></a>
+						<a style="color:black;" href='/buy/view/{{b.token}}'><font size='6' color="#624d48"><B>{{b.name}}{{i}}</B></font></a>
 					</td>
 				</tr>
 				<tr>
 					<td align="center" colspan="3">
 						<a href='/buy/view/{{b.token}}'>
-						<img style="height:300px;width:300px;border-style:solid;border-width:1px;border-color:black;" src='/images/{{b.token}}' ></a>
+						<img style="height:300px;width:300px;border:3px solid #624d48; border-radius: 50px;" src='/images/{{b.token}}' ></a>
 					</td>
 				</tr>
 				<tr>
 					<td align='left'>
-						<font size='6' color='EE0000'><B>${{b.price}}</B></font>
+						<font size='6' color='red'><B>${{b.price}}</B></font>
 					</td>
 					<td align='center'>
-						<font size='4' color='00AA00'><B>限量:{{b.quantity}}份</B></font>
+						<font size='4' color='green'><B>限量:{{b.quantity}}份</B></font>
 					</td>
 					<td align='right'>
-						<font size='4' color='FF6699'><B>賣出:{{b.num}}份</B></font>
+						<font size='4' style="color:orange;"><B>賣出:{{b.num}}份</B></font>
 					</td>
 				</tr>
 				<tr>
 					<td align='left'>
-						<font size='4'><strike>${{b.oprice}}</strike></font>
+						<font size='4' style="color:#AA0000;"><strike>${{b.oprice}}</strike></font>
 					</td>
 					<td align="center">
 						<font size="4">{{b.area}}</font>
@@ -74,7 +74,6 @@ body{
 		</td>
 {% endfor %}
 {% elseif search %}
-<table border=0  align = "center" style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 1000px; border: 0px solid #624d48; text-align:left; '>
 			<tr>
 				<td align='center'  style="font-size:24px;">
 					團購分類搜尋

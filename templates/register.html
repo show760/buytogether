@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Buytogether</title>
+    <meta charset="UTF-8">
+    <title>Buytogether</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/flatly/bootstrap.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 {% if status == true %}
     <script language="JavaScript">
         alert('{{string}}')
@@ -24,78 +28,63 @@ body{
 <table align='center' border='0' width="1000">
 <div>{{ include('top.html') }}</div>
 </table>
-<table border="2" align="center" bordercolor="#6666FF" >
-		<form name="register" method="POST" enctype="multipart/form-data" action="/user/register">
-			<tr bgcolor="99FF99">
-				<td align="right">
-					會員信箱：
-				</td>
-				<td align="left">
-					<input type="text" name="info[email]">
-				</td>
-			</tr>
-			<tr bgcolor="99FF99">
-				<td align="right">
-					會員暱稱：
-				</td>
-				<td align="left">
-					<input type="text" name="info[name]">
-				</td>
-			</tr>
-			<tr bgcolor="99FF99">
-				<td align="right">
-					密碼：
-				</td>
-				<td align="left">
-					<input type="password" name="info[pass1]">
-				</td>
-			</tr>
-			<tr bgcolor="99FF99">
-				<td align="right">
-					密碼確認：
-				</td>
-				<td align="left">
-					<input type="password" name="info[pass2]">
-				</td>
-			</tr>
-			<tr bgcolor="99FF99">
-				<td align='right'>
-					上傳會員圖片：
-				</td>
-				<td align="left">
-					<input type="file" name="file" size="50">
-				</td>
-			</tr>
-			<tr bgcolor="99FF99">
-				<td align="right">
-					生日：
-				</td>
-				<td align="left">
-					<input type="text" name="info[birth]">
-				</td>
-			</tr>
-			<tr bgcolor="99FF99">
-				<td align="right">
-					居住地址：
-				</td>
-				<td align="left">
-					<input type="text" name="info[address]">
-				</td>
-			</tr>
-			<tr bgcolor="99FF99">
-				<td align="right">
-					所在地區：
-				</td>
-				<td align="left">
-					<input type="text" name="info[counties]">
-				</td>
-			</tr>
-			<tr bgcolor="99FF99">
-				<td align="center" colspan="2">
-					<input type="submit" value="註冊會員">
-				</td>
-			</tr>
-		</form>
-	</table>
+<div class="col-md-2"></div>
+<div class="col-md-8">
+    <div class=" well bs-component">
+        <form class="form-horizontal">
+          <fieldset>
+            <legend>註冊</legend>
+            <div class="form-group">
+              <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+              <div class="col-lg-10">
+                <input type="text" class="form-control" name="info[email]" placeholder="Email">
+              </div>
+              <label for="inputNickname" class="col-lg-2 control-label">暱稱</label>
+              <div class="col-lg-10">
+                <input type="text" class="form-control" name="info[name]" placeholder="Nickname">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword" class="col-lg-2 control-label">密碼</label>
+              <div class="col-lg-10">
+                <input type="password" class="form-control" name="info[pass1]" placeholder="Password">
+              </div>
+              <label for="inputRePassword" class="col-lg-2 control-label">確認密碼</label>
+              <div class="col-lg-10">
+                <input type="password" class="form-control" name="info[pass2]" placeholder="Check Password">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputBirth" class="col-lg-2 control-label">生日</label>
+              <div class="col-lg-10">
+                <input type="text" class="form-control" name="info[birth]" placeholder="Birth. ex: 19920520">
+              </div>
+              <label for="inputAddress" class="col-lg-2 control-label">居住地址</label>
+              <div class="col-lg-10">
+                <input type="text" class="form-control" name="info[address]" placeholder="Address">
+              </div>
+              <label for="inputCounties" class="col-lg-2 control-label">所在地區</label>
+              <div class="col-lg-10">
+                <input type="text" class="form-control" name="info[counties]" placeholder="Counties">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="InputFile" class="col-lg-2 control-label">上傳大頭照</label>
+              <div class="col-lg-10">
+                <input type="file" name="file">
+                <p class="help-block">請選擇圖片檔.</p>
+              </div>
+            </div>
+            <div class="form-actions">
+              <div class="col-lg-10 col-lg-offset-2">
+                <button type="reset" class="btn btn-default">重新填寫</button>
+                <button type="submit" class="btn btn-primary">確認註冊</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+    </div>
+</div>
+<div class="col-md-2"></div>
 </body>
 </html>

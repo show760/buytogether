@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>團購資料</title>
+    <link rel="stylesheet" type="text/css" href="/css/img.css">
+    <link rel="stylesheet" type="text/css" href="/css/form.css">
 {% if status == true and string %}
     <script language="JavaScript">
         alert('{{string}}')
@@ -27,36 +29,26 @@ body{
 </table>
 {% if buy and user %}
 <form  action='/buy/join/{{buy.token}}' enctype="multipart/form-data" method='POST'>
-    <table align="center" style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 700px; border: 0px solid #624d48; text-align:left; border-radius:50px;'>
+    <table class="main-table">
+    <tr>
+        <th>
+            <div class="main-th">{{buy.name}}</div>
+        </th>
     <tr>
         <td align='center'>
-            <font size='6' color="#624d48"><B>{{buy.name}}</B></font>
+            <img class="group-img" src='/images/{{buy.token}}' >
         </td>
-    </tr>
     <tr>
-        <td align='center'>
-            <img style="height:300px;width:300px;border:3px solid #624d48; border-radius: 50px;" src='/images/{{buy.token}}' >
-        </td>
-    </tr>
-    <tr>
-        <td align="center">
-            <font size="4"><B></B>付款方式：{% if buy.methor == 'facetoface' %}面交{% else %}郵局匯款{% endif %}</font>
-        </td>
-    </tr>
-    <tr>
-        <td align='center'>
-            <font size='4'><B>價錢：<font color='FF0000' >$ {{buy.price}}</font></B></font>
-        </td>
-    </tr>
-    <tr>
-        <td align='center'>
-            <font size='4'><B>尚有：<font color='FF0000'>{{ buy.quantity - buy.num }}份</font></B></font>
-        </td>
-    </tr>
-    <tr>
-        <td align='center'>
-            <font size='4'><B>請填入購買數量:</B></font>
-            <input type='text' name='quantity' size='5'>
+        <td>
+            <ul style="list-style-type:none; ">
+                <li class="group-li" style="margin-right:80px;">付款方式：{% if buy.methor == 'facetoface' %}面交{% else %}郵局匯款{% endif %}</li>
+                <li class="group-li" style="margin-right:115px;">價錢：$ {{buy.price}}</li>
+                <li class="group-li" style="margin-right:112px;">尚有：{{ buy.quantity - buy.num }}份</li>
+                <li class="group-li" style="margin-right:10px;">請填入購買數量：<input type='text' name='quantity' size='5'></li> 
+            </ul>
+            <div style="margin: auto;">
+                <input type='hidden' name='pid' value='{{buy.token}}'><button class="AddGroupButton" style="width:150px;" type='submit'>參加團購</button>
+            </div>
         </td>
     </tr>
     <tr>
@@ -67,12 +59,6 @@ body{
     <tr>
         <td align='center'>
             <font size='3'><B>(請確認身份：<font color='FF9900'>{{useremail}}</font>)</B></font>
-        </td>
-    </tr>
-    <tr>
-        <td align='center'>
-            <input type='hidden' name='pid' value='{{buy.token}}'> 
-            <font size='4'><input type='submit' value='送出'></font>
         </td>
     </tr>
 </table>

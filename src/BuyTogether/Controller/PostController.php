@@ -80,7 +80,7 @@ class PostController extends Seed
                 $msg = array(
                     'status' => true,
                     'string' => '刪除留言成功',
-                    'buy.token' => $threadplus->getBid()
+                    'token' => $threadplus->getBid()
                 );
             } else {
                 $msg = array(
@@ -98,7 +98,7 @@ class PostController extends Seed
         $session = new PhpSession;
         $joins = Join::valid($bid, $session->get('user'));
         $buy = Buy::load($bid);
-        $uid = User::getIdByEmail($buy->getOwner()); 
+        $uid = User::getIdByEmail($buy->getOwner());
         if ($joins or ($uid == $session->get('user'))) {
             $threadplus = ThreadPlus::loadByBid($bid);
             $thread = $threadplus->getThread();

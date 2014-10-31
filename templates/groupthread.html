@@ -7,7 +7,7 @@
         {% if string == '你沒有權限刪除該留言' %}
     <script language="JavaScript">
         alert('{{string}}')
-        window.location.replace('/thread/{{buy.token}}')
+        window.location.replace('/thread/{{token}}')
     </script>
         {% else %}
     <script language="JavaScript">
@@ -16,10 +16,16 @@
     </script>
         {% endif %}
     {% elseif status == true and string %}
+        {% if string == '刪除留言成功' %}
         <script language="JavaScript">
-        alert('{{string}}')
-        window.location.replace('/thread/{{buy.token}}')
-    </script>
+            alert('{{string}}')
+            window.location.replace('/thread/{{token}}')
+        </script>
+        {% else %}
+        <script language="JavaScript">
+            window.location.replace('/thread/{{buy.token}}')
+        </script>
+        {% endif %}
     {% endif %}
 <style>
 body{

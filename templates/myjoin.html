@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>我的團購</title>
+    <link rel="stylesheet" type="text/css" href="/css/img.css">
 {% if string %}
     <script language="JavaScript">
         alert('{{string}}')
@@ -29,7 +30,7 @@ body{
         </td>
     <tr align="center">
         <td colspan="2">
-            <img style="height:300px;width:300px;border-style:solid;border-width:1px;border-color:black;" src='/images/{{buy.token}}' >
+            <img class="group-img" src='/images/{{buy.token}}' >
         </td>
     <tr align="center">
         <td colspan="2">

@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Buytogether</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <title>Buytogether</title>
+    <link rel="stylesheet" type="text/css" href="/css/img.css">
+    <link rel="stylesheet" type="text/css" href="/css/form.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/flatly/bootstrap.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <style>
 body{
     overflow-y:scroll;
@@ -13,228 +21,177 @@ body{
 <table align='center' border='0' width="1000">
 <div>{{ include('top.html') }}</div>
 <div>{{ include('bt.html') }}</div>
-	<tr>
-		<td colspan="2">
+    <tr>
+        <td colspan="2">
 {% if buy %}
-			<marquee onMouseOver="this.stop()" onMouseOut="this.start()" scrollamount="10">
+            <marquee onMouseOver="this.stop()" onMouseOut="this.start()" scrollamount="10">
 {% for b in buy %}
-			<a href='/buy/view/{{b.token}}'>
-				<img  style="height:150px;width:150px;border:1px solid #624d48;border-radius: 30px;" src='/images/{{b.token}}' >
-			</a>
+            <a href='/buy/view/{{b.token}}'>
+                <img  class="marquee-img" src='/images/{{b.token}}' >
+            </a>
 {% endfor %}
-			</marquee>
+            </marquee>
 {% endif %}
-		</td>
-	</tr>
+        </td>
+    </tr>
 </table>
-<table align='center' width='1000' style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 1000px; border: 0px solid #624d48; text-align:left; border-radius: 50px;'>
+<table class="main-table">
 {% set count = 0 %}
 {% if buy  %}
 {% for b in buy %}
 {% if count % 3 == 0 %}
-	<tr>
+    <tr>
 {% endif %}
 {% set count = count + 1 %}
-		<td width='300'>
-			<table align="center" width="300">
-				<tr>
-					<td align="center" colspan="3" height="50">
-						<a style="color:black;" href='/buy/view/{{b.token}}'><font size='6' color="#624d48"><B>{{b.name}}{{i}}</B></font></a>
-					</td>
-				</tr>
-				<tr>
-					<td align="center" colspan="3">
-						<a href='/buy/view/{{b.token}}'>
-						<img style="height:300px;width:300px;border:3px solid #624d48; border-radius: 50px;" src='/images/{{b.token}}' ></a>
-					</td>
-				</tr>
-				<tr>
-					<td align='left'>
-						<font size='6' color='red'><B>${{b.price}}</B></font>
-					</td>
-					<td align='center'>
-						<font size='4' color='green'><B>限量:{{b.quantity}}份</B></font>
-					</td>
-					<td align='right'>
-						<font size='4' style="color:orange;"><B>賣出:{{b.num}}份</B></font>
-					</td>
-				</tr>
-				<tr>
-					<td align='left'>
-						<font size='4' style="color:#AA0000;"><strike>${{b.oprice}}</strike></font>
-					</td>
-					<td align="center">
-						<font size="4">{{b.area}}</font>
-					</td>
-					<td align='right'>
-						<a style="color:black;" href='/buy/view/{{b.token}}'><font size="4">{% if b.end == 'open' %}立即加入{% else %}團購資料{% endif %}</font></a>
-					</td>
-				</tr>
-			</table>
-		</td>
+        <td width='300'>
+            <table align="center" width="300">
+                <tr>
+                    <td align="center" colspan="3" height="50">
+                        <a href='/buy/view/{{b.token}}'><font size='6' color="#624d48"><B>{{b.name}}{{i}}</B></font></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="3">
+                        <a href='/buy/view/{{b.token}}'>
+                        <img class="main-img" src='/images/{{b.token}}' ></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td align='left'>
+                        <font size='6' color='red'><B>${{b.price}}</B></font>
+                    </td>
+                    <td align='center'>
+                        <font size='4' color='green'><B>限量:{{b.quantity}}份</B></font>
+                    </td>
+                    <td align='center'>
+                        <font size='3' color='orange'><B>{{b.num}}份已販售</B></font>
+                    </td>
+                </tr>
+                <tr>
+                    <td align='left'>
+                        <font size='4' color='#AA0000'><strike>${{b.oprice}}</strike></font>
+                    </td>
+                    <td align="center">
+                        <font size="4">{{b.area}}</font>
+                    </td>
+                    <td align='center'>
+                        <a style="color:#624d48; font-weight: bold; font-size: 20px;" href='/buy/view/{{b.token}}'>{% if b.end == 'open' %}立即加入{% else %}團購資料{% endif %}</a>
+                    </td>
+                </tr>
+            </table>
+        </td>
 {% endfor %}
 {% elseif search %}
-			<tr>
-				<td align='center'  style="font-size:24px;">
-					團購分類搜尋
-				</td>
-			</tr>
-			<tr>
-				<td align='center' style="font-size:20px;">
-					付款方式
-				</td>
-			</tr>
-			<tr>
-				<td align='center'>
-					<table bgcolor='#A00200'>
-					<tr>
-						<td style="font-size:14px;"><a href="/?methor=facetoface"><font color='#FFFFFF'>面交</font></a></td>
-						<td style="font-size:14px;"><a href="/?methor=remittance"><font color='#FFFFFF'>匯款</font></a></td>
-					</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td align='center' style="font-size:20px;">
-					地區
-				</td>
-			</tr>
-			<tr>
-				<td align='center'>
-					<table bgcolor='#A00200'>
-						<tr>
-							<td style="font-size:14px;">
-								<a href="/?area=台北"><font color='#FFFFFF'>台北</font></a>
-							</td>
-							<td style="font-size:14px;">
-								<a href="/?area=新北"><font color='#FFFFFF'>新北</font></a>
-							</td>
-							<td style="font-size:14px;">
-								<a href="/?area=桃園"><font color='#FFFFFF'>桃園</font></a>
-							</td> 
-							<td style="font-size:14px;">
-								<a href="/?area=新竹"><font color='#FFFFFF'>新竹</font></a>
-							</td>
-							<td style="font-size:14px;">
-								<a href="/?area=苗栗"><font color='#FFFFFF'>苗栗</font></a>
-							</td>
-							<td style="font-size:14px;">
-								<a href="/?area=台中"><font color='#FFFFFF'>台中</font></a>
-							</td> 
-							<td style="font-size:14px;">
-								<a href="/?area=彰化"><font color='#FFFFFF'>彰化</font></a>
-							</td>
-							<td style="font-size:14px;">
-								<a href="/?area=南投"><font color='#FFFFFF'>南投</font></a>
-							</td> 
-							<td style="font-size:14px;">
-								<a href="/?area=雲林"><font color='#FFFFFF'>雲林</font></a>
-							</td>
-							<td style="font-size:14px;">
-								<a href="/?area=嘉義"><font color='#FFFFFF'>嘉義</font></a>
-							</td>
-							<td style="font-size:14px;">
-								<a href="/?area=台南"><font color='#FFFFFF'>台南</font></a>
-							</td> 
-							<td style="font-size:14px;">
-								<a href="/?area=高雄"><font color='#FFFFFF'>高雄</font></a>
-							</td>
-							<td style="font-size:14px;">
-								<a href="/?area=屏東"><font color='#FFFFFF'>屏東</font></a>
-							</td>
-							<td style="font-size:14px;">
-								<a href="/?area=宜蘭"><font color='#FFFFFF'>宜蘭</font></a>
-							</td> 
-							<td style="font-size:14px;">
-								<a href="/?area=花蓮"><font color='#FFFFFF'>花蓮</font></a>
-							</td>
-							<td style="font-size:14px;">
-								<a href="/?area=台東"><font color='#FFFFFF'>台東</font></a>
-							</td> 
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td align='center'>
-					<table align='center'>
-							<form name="report" method="GET" enctype="multipart/form-data" action="/">
-						<tr>
-							<td align='center' style="font-size:18px;">
-								進階查詢<br>說明：選擇要查詢的項目，若該項沒有要查詢則不用選擇。
-							</td>	
-						</tr>
-					<tr>
-						<td align='center'>
-							付款方式: 
-								<select size='1' name='methor'>
-								<option value='' selected>---請選擇---
-								<option value='facetoface'>面交
-								<option value='remittance'>匯款
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td align='center'>
-							地區: 
-							<select size='1' name='area'>
-								<option value='' selected>---請選擇---
-								<option value='台北'>台北
-								<option value='新北'>新北
-								<option value='桃園'>桃園
-								<option value='新竹'>新竹
-								<option value='苗栗'>苗栗
-								<option value='台中'>台中
-								<option value='彰化'>彰化
-								<option value='南投'>南投
-								<option value='雲林'>雲林
-								<option value='嘉義'>嘉義
-								<option value='台南'>台南
-								<option value='高雄'>高雄
-								<option value='屏東'>屏東
-								<option value='宜蘭'>宜蘭
-								<option value='花蓮'>花蓮
-								<option value='台東'>台東
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td align='center'>
-							團購分類: 
-							<select size='1' name='class'>
-								<option value='' selected>---請選擇---
-								<option value='goodeat'>找好吃
-								<option value='goodfun'>找好玩
-								<option value='gooduse'>找好用
-							</select>
-						</td>
-					</tr>
-					<tr> 
-						<td  align="CENTER"> 
-							<input type="submit" value="查詢">
-						</td>
-					</tr>
-						</form>
-					</table>
-				</td>
-			</tr>
-		</table>
+            <tr>
+                <td align='center'>
+                    <h1>團購分類搜尋</h1>
+                </td>
+            <tr>
+                <td align='center'>
+                    <div class="navbar navbar-inverse" style="width:250px">
+                      <div class="navbar-header">
+                        <a class="navbar-brand" disabled="disabled">付款方式</a>
+                      </div>
+                      <div class="navbar-collapse collapse navbar-inverse-collapse">
+                        <ul class="nav navbar-nav">
+                          <li><a href="/?methor=facetoface">面交</a></li>
+                          <li><a href="/?methor=remittance">匯款</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                <div class="navbar navbar-inverse">
+                      <div class="navbar-header">
+                        <a class="navbar-brand" disabled="disabled">地區</a>
+                      </div>
+                      <div class="navbar-collapse collapse navbar-inverse-collapse">
+                        <ul class="nav navbar-nav">
+                          <li><a href="/?area=台北">台北</a></li>
+                          <li><a href="/?area=新北">新北</a></li>
+                          <li><a href="/?area=桃園">桃園</a></li>
+                          <li><a href="/?area=苗栗">苗栗</a></li>
+                          <li><a href="/?area=台中">台中</a></li>
+                          <li><a href="/?area=彰化">彰化</a></li>
+                          <li><a href="/?area=南投">南投</a></li>
+                          <li><a href="/?area=雲林">雲林</a></li>
+                          <li><a href="/?area=嘉義">嘉義</a></li>
+                          <li><a href="/?area=台南">台南</a></li>
+                          <li><a href="/?area=高雄">高雄</a></li>
+                          <li><a href="/?area=屏東">屏東</a></li>
+                          <li><a href="/?area=宜蘭">宜蘭</a></li>
+                          <li><a href="/?area=花蓮">花蓮</a></li>
+                          <li><a href="/?area=台東">台東</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td align='center'>
+                    <table align='center'>
+                            <form name="report" method="GET" enctype="multipart/form-data" action="/">
+                        <tr>
+                            <td align='center' style="font-size:18px;">
+                                <h2 class="text-danger">進階查詢說明</h2><p class="text-info">選擇要查詢的項目，若該項沒有要查詢則不用選擇。</p>
+                            </td>   
+                        </tr>
+                    <tr>
+                        <td align='center'>
+                                <select size='1' name='methor' class="btn btn-success">
+                                <option value='' selected>-付款方式-
+                                <option value='facetoface'>面交
+                                <option value='remittance'>匯款
+                            </select><select size='1' name='area' class="btn btn-success">
+                                <option value='' selected>-團購地區-
+                                <option value='台北'>台北
+                                <option value='新北'>新北
+                                <option value='桃園'>桃園
+                                <option value='新竹'>新竹
+                                <option value='苗栗'>苗栗
+                                <option value='台中'>台中
+                                <option value='彰化'>彰化
+                                <option value='南投'>南投
+                                <option value='雲林'>雲林
+                                <option value='嘉義'>嘉義
+                                <option value='台南'>台南
+                                <option value='高雄'>高雄
+                                <option value='屏東'>屏東
+                                <option value='宜蘭'>宜蘭
+                                <option value='花蓮'>花蓮
+                                <option value='台東'>台東
+                            </select><select size='1' name='class' class="btn btn-success">
+                                <option value='' selected>-團購分類-
+                                <option value='goodeat'>找好吃
+                                <option value='goodfun'>找好玩
+                                <option value='gooduse'>找好用
+                            </select>
+                        </td>   
+                    <tr> 
+                        <td  align="CENTER">
+                            <button type="submit" class="btn btn-primary">查詢</button>
+                        </td>
+                    </tr>
+                        </form>
+                    </table>
+                </td>
+            </tr>
+        </table>
 {% else %}
-	<tr>
-		<td align="center">
-			<h3>該查詢項目中沒有團購資料，請重新查詢</h3>
-		</td>
-	<tr>
-		<td align="center">
-			<a href="/?search=ture">重新查詢</a>
-		</td>	
+    <tr>
+        <td align="center">
+            <h3>該查詢項目中沒有團購資料，請重新查詢</h3>
+        </td>
+    <tr>
+        <td align="center">
+            <a href="/?search=ture">重新查詢</a>
+        </td>   
 {% endif %}
-	</tr>
+    </tr>
 </table>
 <br />
 <hr width="1000">
 <br />
 <br />
 
+</div>
 </body>
 </html>

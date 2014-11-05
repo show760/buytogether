@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Buytogether</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/flatly/bootstrap.min.css" rel="stylesheet">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <style>
 body{
     overflow-y:scroll;
@@ -97,6 +99,42 @@ body{
                 </h3>
             </div>
             <div id="eoqd_list2"></div>
+            <div id="conps_list" style="display:none; text-align:center;">
+                <div class="col-md-3"></div>
+                <div id ="conps_main" class="col-md-6"><div class=" well bs-component">
+        <form id="conpsforms" class="form-horizontal">
+          <fieldset>
+            <legend>訂購最佳數量</legend>
+            <div class="form-group">
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="prices" name="price" placeholder="跟廠商訂購貨品的價格">
+                </div>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="upprices" name="upprice" placeholder="貨品實際售價">
+                </div>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="lowprices" name="lowprice" placeholder="貨品有剩的情況,轉手低價賣出去的價格(賣不出去為0)">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="means" name="mean" placeholder="估計大約需要的數量">
+                </div>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="errors" name="error" placeholder="訂購數量的可能誤差值約為">
+                </div>
+            </div>
+            <div class="form-actions">
+              <div class="col-lg-10 col-lg-offset-2">
+                <button type="reset" class="btn btn-default">重新填寫</button>
+                <button id="conpssubmit" type="submit" class="btn btn-primary">確認註冊</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+    </div></div>
+                <div class="col-md-3"></div>
+            </div>
         </td>
 </table>
 <br />
@@ -121,20 +159,31 @@ body{
             $('#eoqp_list').hide();
             $('#eoqd_list').hide();
             $('#eoqd_list2').hide();
+            $('#conps_list').hide();
             $('#eoq_list').slideToggle();
         });
         $('#eoqp').click(function(){
             $('#eoq_list').hide();
             $('#eoqd_list').hide();
             $('#eoqd_list2').hide();
+            $('#conps_list').hide();
             $('#eoqp_list').slideToggle();
         });
         $('#eoqd').click(function(){
             $('#eoqd_list2').hide().empty();
             $('#eoq_list').hide();
             $('#eoqp_list').hide();
+            $('#conps_list').hide();
             $('#eoqd_list').slideToggle();
         });
+        $('#conps').click(function(){
+            $('#eoq_list').hide();
+            $('#eoqp_list').hide();
+            $('#eoqd_list').hide();
+            $('#eoqd_list2').hide();
+            $('#conps_list').slideToggle();
+        });
+
         $('#countco').click(function(){
             $('#co_list').slideToggle();
         });
@@ -211,6 +260,7 @@ body{
     $('#eoqd_list2').on('click','#eoqd3_submits',function() {
         var sp = new Array(parseInt($('#discounts').val()));
         var qu = new Array(parseInt($('#discounts').val()));
+        var re = "<table align = 'center' width='60%'><tr><td colspan = '3'></td>";
         for (var i = 1; i <= parseInt($('#discounts').val()); i++) {
             var j = i-1;
             switch ($('#dis'+i).val()) {
@@ -245,17 +295,84 @@ body{
                     sp[j] = parseInt($('#price').val()) * 0.1;
                     break;
                 default:
-                 sp[j] = parseInt($('#price').val()) * parseInt($('#dis'+i).val()) * 0.01; 
+                 sp[j] = (parseInt($('#price').val()) * parseInt($('#dis'+i).val()) * 0.01).toFixed(2); 
             }
         }
         var ch = parseInt($('#chs2').val()) *10;
+        var demand = parseInt($('#demands2').val());
+        var co = parseInt($('#cos2').val());
         for (var i = 1 ; i <= parseInt($('#discounts').val()) ; i++) {
-            var count_eoqd = (2 * parseInt($('#demands2').val()) * parseInt($('#cos2').val())) / (( ch / 100) * sp[i-1] );
-            qu[i-1] = Math.round(Math.sqrt(count_eoqd));
+            var j= i-1;
+            var count_eoqd = (2 * demand * co) / (( ch / 100) * sp[j] );
+            qu[j] = Math.round(Math.sqrt(count_eoqd));
+            re =  re +"<tr><td colspan='2' align='center' width='40%'>Q"+i+"* = "+qu[j]+"</td>";
         }
-        alert(qu);
+
+        var tc = new Array(parseInt($('#discounts').val()));
+        var tcq = new Array(parseInt($('#discounts').val()));
+        var tcd = new Array(parseInt($('#discounts').val()));
+        var tcp = new Array(parseInt($('#discounts').val()));
+
+        for (var i = 1 ; i <= parseInt($('#discounts').val()) ; i++) {
+            var j = i+1;
+            var l = i-1;
+            if (qu[l] < parseInt($('#range1s'+i).val())) {
+                qu[l] = parseInt($('#range1s'+i).val());
+              re = re +"<tr><td align = 'center' colspan='1'> 由於Q"+i+"* 小於最小數量"+$('#range1s'+i).val()+" , Q"+i+"* = "+$('#range1s'+(i)).val()+"</td>";
+            } else if (qu[l] >=parseInt($('#range1s'+j).val())) {
+                re= re+"<tr><td align = 'center'> 由於Q"+i+"* 大於下一層級的最小數量"+$('#range1s'+j).val()+", Q"+i+"* 不會是最佳解</td>";
+            }
+
+            tc[l] = Math.round(( ( qu[l] / 2) * ((ch/100) * sp[l]) ) + ( (demand / qu[l]) * co) + (((demand / qu[l])* sp[l]) * qu[l]));
+            tcq[l] = Math.round( (qu[l] / 2) * ((ch/100) * sp[l]) );
+            tcd[l] = Math.round( (demand / qu[l]) * co);
+            tcp[l] = Math.round(((demand / qu[l])* sp[l]) * qu[l]);
+        }
+
+        re = re+"</table><br><br><br><h3 align='center'> EOQ數量折扣模式的總成本計算 </h3><table align= 'center'  width='60%' ><tr><td colspan='3'></td><td align = 'center' colspan= '4'>年成本</td></tr><tr><td align = 'center'>折讓等級</td><td align = 'center'>單價</td><td align = 'center'>訂購量</td><td align = 'center'>持有</td><td align = 'center'>訂購</td><td align = 'center'>採購</td><td align = 'center'>合計</td></tr>";
+
+        var a = tc[0];
+        for(var m = 0 ; m < parseInt($('#discounts').val()) ; m++){
+            var n= m + 1;
+            re = re+"<tr><td align='center'>"+n+"</td><td align='center'>"+sp[m]+"</td><td align='center'>"+qu[m]+"</td><td align='center'>"+tcq[m]+"</td><td align='center'>"+tcd[m]+"</td><td align='center'>"+tcp[m]+"</td><td align='center'>"+tc[m]+"</td>";
+            if (a > tc[m]) {
+                a = tc[m];
+            }
+        }
+        re = re +"  <tr><td align = 'center' colspan = '7'><br><br><br></td><tr><td align = 'center' colspan = '7'><h3>最划算的方案如下:</h3></td>";
+
+        for(var m = 0 ; m < parseInt($('#discounts').val()) ; m++){
+            var n= m + 1;
+            if (a == tc[m]) {
+                re = re+"<tr><td colspan='3'></td><td align = 'center' colspan= '4'>年成本</td></tr><tr><td align = 'center'>折讓等級</td><td align = 'center'>單價</td><td align = 'center'>訂購量</td><td align = 'center'>持有</td><td align = 'center'>訂購</td><td align = 'center'>採購</td><td align = 'center'>合計</td></tr><tr><td align='center'>"+n+"</td><td align='center'>"+sp[m]+"</td><td align='center'>"+qu[m]+"</td><td align='center'>"+tcq[m]+"</td><td align='center'>"+tcd[m]+"</td><td align='center'>"+tcp[m]+"</td><td align='center'>"+tc[m]+"</td>";
+            }
+        }
+        re = re +"</table>";
+
+        $('#eoqd_list2').html(re);
+
         return false;
     });
+
+    $('#conpssubmit').click(function(){
+             $.ajax({
+                url: 'http://buytogether/eoq/conps',
+                data: $('#conpsforms').serialize(),
+                type:"POST",
+                dataType:'text',
+
+                success: function(msg){
+                    var re = "<legend>您輸入的資料如下</legend>";
+                    $('#conps_main').html(re);
+                },
+
+                 error:function(xhr, ajaxOptions, thrownError){ 
+                    alert(xhr.status); 
+                    alert(thrownError); 
+                 }
+            });
+            return false;
+        })
 
         // $('body div .sel').val('');
         // $('body div .sel').click()

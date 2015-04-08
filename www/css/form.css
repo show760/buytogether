@@ -1,0 +1,77 @@
+.main-table {
+    background:rgba(255, 255, 255, .5);
+    margin: auto;
+    padding:30px;
+    width: 1000px;
+    border: 0px solid #624d48;
+    text-align:center;
+    border-radius: 50px;
+}
+.main-th {
+    height:50px;
+    width:800px;
+    margin: auto;
+    border:3px solid #624d48;
+    font-weight: bold;
+    padding:20px;
+    border-radius: 30px;
+    font-size:50px;
+    color:#624d48;
+}
+.main-td {
+    height:20px;
+    width:400px;
+    border-radius: 10px;
+    font-size:20px;
+}
+.price {
+    color:red;
+    text-align: left;
+    font-size:50px;
+    font-weight: bold;
+}
+.price-info {
+    color:grey;
+    text-align:left;
+    font-size: 20px; 
+}
+.price-info-border {
+    border: 0px;
+    padding: 5px;
+}
+.AddGroupButton {
+    cursor: pointer;
+    text-align: center;
+    background-color: #624d48;
+    width:100px;
+    border: 1px solid;
+    font-weight: bold; 
+    color: #f2c699;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px #333;
+    padding: 10px;
+    font-size: 20px; 
+}
+.group-com {
+    text-align: center;
+    margin: auto;
+    background-color: #e0b487;
+    border: 1px solid;
+    font-weight: bold; 
+    color: #624d48;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px #333;
+    width:700px;
+    padding: 10px;
+    font-size: 20px; 
+}
+.group-area {
+    text-align: left;
+    width:200px;
+    margin-left: 0px;
+}
+.group-li {
+    font-weight: bold;
+    color:#624d48;
+    font-size: 20px
+}

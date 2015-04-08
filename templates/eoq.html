@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Buytogether</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/flatly/bootstrap.min.css" rel="stylesheet">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <style>
 body{
     overflow-y:scroll;
@@ -20,16 +22,18 @@ body{
 <table align='center'>
     <tr>
         <td>
-            <span id="eoq" color="green"><u>最小年總成本訂購量</u></span>｜<span id="eoqp" color="green"><u>經濟生產批量</u></span>｜<span id="eoqd" color="green"><u>數量折扣</u></span>｜<span id="conps" color="green"><u>隨機需求單一週期存貨模式</u></span>
+            <div style="font-size:20px;">
+            <font id="eoq" color="green"><u>最小年總成本訂購量</u></font>｜<font id="eoqp" color="green"><u>經濟生產批量</u></font>｜<font id="eoqd" color="green"><u>數量折扣</u></font>｜<font id="conps" color="green"><u>隨機需求單一週期存貨模式</u></font>
+            </div>
         </td>
     </tr>
 </table>
 <br />
 <br />
-<table align='center' style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 90%; border: 0px solid #624d48; text-align:left; '>
+<table align='center' style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 90%; border: 0px solid #624d48; text-align:left; border-radius:30px;'>
     <tr>
         <td colspan="3" align="center">
-            <span color="624d48" size="4">透過上面四種計算方式，能於各種情境下幫助團主找出最合適的訂購數量。</span><br /><br /><br />
+            <font color="624d48" size="4">透過上面四種計算方式，能於各種情境下幫助團主找出最合適的訂購數量。</font><br /><br /><br />
         </td>
     <tr align="center">
         <td style="width: 33%;" >
@@ -52,8 +56,8 @@ body{
                     <h3 align='center'>計算最小年總成本訂購量</h3>
                     <form id='forms'>
                         <div>需求數量(D)&nbsp;&nbsp;：<input id='demand' type ='text' size='10'></div>
-                        <div>訂購成本(Co)：<input id='cos' type ='text' size='10'><span id='countco' color='624d48'>預估訂購成本</span></div>
-                        <div>持有成本(Ch)：<input id='chs' type ='text' size='10'><span id='countch' color='624d48'>預估持有成本</span></div>
+                        <div>訂購成本(Co)：<input id='cos' type ='text' size='10'><font id='countco' color='624d48'>預估訂購成本</font></div>
+                        <div>持有成本(Ch)：<input id='chs' type ='text' size='10'><font id='countch' color='624d48'>預估持有成本</font></div>
                         <div align='center'><button id='eoq_submits'>送出</button></div>
                     </form><br /><br />
                 </div>
@@ -61,8 +65,8 @@ body{
                 <h3 align='center'>計算經濟生產批量</h3>
                     <form id='eoqp_forms'>
                         <div>年需求量(D)&nbsp;&nbsp;：<input type ='text' id='demands1' size='10'></div>
-                        <div>訂購成本(Co)：<input id='cos1' type ='text' size='10'><span id='countco1' color='624d48'>預估訂購成本</span></div>
-                        <div>持有成本(Ch)：<input id='chs1' type ='text' size='10'><span id='countch1' color='624d48'>預估持有成本</span></div>
+                        <div>訂購成本(Co)：<input id='cos1' type ='text' size='10'><font id='countco1' color='624d48'>預估訂購成本</font></div>
+                        <div>持有成本(Ch)：<input id='chs1' type ='text' size='10'><font id='countch1' color='624d48'>預估持有成本</font></div>
                         <div>團購廠商的年生產量(P)：<input type ='text' id='ps1' size='10'></div>
                         <div align='center'><button id='eoqp_submits'>送出</button></div>
                     </form><br /><br />
@@ -95,31 +99,91 @@ body{
                 </h3>
             </div>
             <div id="eoqd_list2"></div>
+            <div id="conps_list" style="display:none; text-align:center;">
+                <div class="col-md-3"></div>
+                <div id ="conps_main" class="col-md-6"><div class=" well bs-component">
+        <form id="conpsforms" class="form-horizontal">
+          <fieldset>
+            <legend>訂購最佳數量</legend>
+            <div class="form-group">
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="prices" name="price" placeholder="跟廠商訂購貨品的價格">
+                </div>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="upprices" name="upprice" placeholder="貨品實際售價">
+                </div>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="lowprices" name="lowprice" placeholder="貨品有剩的情況,轉手低價賣出去的價格(賣不出去為0)">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="means" name="mean" placeholder="估計大約需要的數量">
+                </div>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="errors" name="error" placeholder="訂購數量的可能誤差值約為">
+                </div>
+            </div>
+            <div class="form-actions">
+              <div class="col-lg-10 col-lg-offset-2">
+                <button type="reset" class="btn btn-default">重新填寫</button>
+                <button id="conpssubmit" type="submit" class="btn btn-primary">確認註冊</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+    </div></div>
+                <div class="col-md-3"></div>
+            </div>
         </td>
 </table>
-
+<br />
+<hr width="1000">
+<br />
 </body>
 <script>
     $(function() {
+        $('#eoq').mouseenter(function(){
+            $(this).css("cursor","Pointer");
+        });
+        $('#eoqd').mouseenter(function(){
+            $(this).css("cursor","Pointer");
+        });
+        $('#eoqp').mouseenter(function(){
+            $(this).css("cursor","Pointer");
+        });
+        $('#conps').mouseenter(function(){
+            $(this).css("cursor","Pointer");
+        });
         $('#eoq').click(function(){
             $('#eoqp_list').hide();
             $('#eoqd_list').hide();
             $('#eoqd_list2').hide();
+            $('#conps_list').hide();
             $('#eoq_list').slideToggle();
         });
         $('#eoqp').click(function(){
             $('#eoq_list').hide();
             $('#eoqd_list').hide();
             $('#eoqd_list2').hide();
+            $('#conps_list').hide();
             $('#eoqp_list').slideToggle();
         });
         $('#eoqd').click(function(){
-            $('#eoqd_list2').hide();
-            $('#eoqd_list2').html('');
+            $('#eoqd_list2').hide().empty();
             $('#eoq_list').hide();
             $('#eoqp_list').hide();
+            $('#conps_list').hide();
             $('#eoqd_list').slideToggle();
         });
+        $('#conps').click(function(){
+            $('#eoq_list').hide();
+            $('#eoqp_list').hide();
+            $('#eoqd_list').hide();
+            $('#eoqd_list2').hide();
+            $('#conps_list').slideToggle();
+        });
+
         $('#countco').click(function(){
             $('#co_list').slideToggle();
         });
@@ -153,26 +217,162 @@ body{
 
         $('#eoqp_submits').click(function(){
             var count_eoqp = (2 * parseInt($('#demands1').val()) * parseInt($('#cos1').val())) / ((1 - parseInt($('#demands1').val()) / parseInt($('#ps1').val())) * parseInt($('#chs1').val()));
-            var re1 = Math.round(Math.sqrt(count_eoqp));
-            alert('經濟生產批量為：'+ re1);
+            var re = Math.round(Math.sqrt(count_eoqp));
+            alert('經濟生產批量為：'+ re);
             return false;
         });
 
         $('#eoqd_submits').click(function(){
             $('#eoqd_list').hide();
             $('#eoqd_list2').show();
-            var re ="<h3 align='center'>請輸入以下資料：</h3><form id='eoqd_forms2'><table align='center' style='text-align: center;''><tr><td align='left' colspan='3'>該產品價格：<input id='price' type='text' size='15'></td><td colspan='2' align='left'>｜折扣or優惠價,擇一填</td><tr><td>｜折讓等級 </td><td>｜訂購產品的數量範圍(小) </td><td>｜訂購產品的數量範圍(大) </td><td>｜折扣(幾折) </td><td>｜優惠價｜</td>";
+            var re ="<div style='text-align:center; font-size:40px; color:#624d48;'>請輸入以下資料：</div><h3 align='center'>舉例說明 :</h3><table align='center' style='text-align: center;''><tr><td align='left' colspan='5'>該產品價格：5</td><tr><td>｜折讓等級</td><td>｜訂購產品的數量範圍(小)</td><td>｜訂購產品的數量範圍(大)</td><td>｜折扣(幾折)</td><td>｜優惠價</td><tr><td>1</td><td>0</td><td>999</td><td>0</td><td>5</td><tr><td>2</td><td>1000</td><td>2499</td><td>97</td><td>4.85</td><tr><td>3</td><td>2500</td><td></td><td>95</td><td>4.75</td><tr><td colspan='5'><font color='red'>沒有打折，折扣填0｜沒有優惠價，則填原價</font></td><tr><td colspan='5'>系統將自動轉換優惠價→折扣</td></table><br/><hr width='1000'><br/><form id='eoqd_forms1'><table align='center' style='text-align: center;'><tr><td align='left' colspan='3'>該產品價格：<input id='price' type='text' size='15'></td><td colspan='2' align='left'>｜折扣or優惠價,擇一填</td><tr><td>｜折讓等級 </td><td>｜訂購產品的數量範圍(小) </td><td>｜訂購產品的數量範圍(大) </td><td>｜折扣(幾折) </td><td>｜優惠價｜</td>";
             for (var i =1; i <= parseInt($('#discounts').val()); i++) {
-            var re = re +"<tr><td>"+ i +"</td><td><input type ='text' id='range1[]' size='10'></td><td>";
+            var re = re +"<tr><td>"+ i +"</td><td><input type ='text' id='range1s"+i+"' size='10'></td><td>";
                 if ( parseInt(i) != parseInt($('#discounts').val())) {
-                    var re = re + "<input type ='text' id='range2[]' size='10'>";
+                    var re = re + "<input type ='text' id='range2s"+i+"' size='10'>";
                 }
-                var re = re +"</td><td><input type ='text' id='dis[]' size='10'></td><td><input type ='text' id='disprice[]' size='10' >";
+                var re = re +"</td><td><input type ='text' id='dis"+i+"' size='10'></td><td><input type ='text' id='disprice"+i+"' size='10' >";
             }
-            var re = re +"<tr><td colspan='3'></td><td colspan='2'><button id='eoqd2_submits'>送出</button></td></table><br /><br /><h3 align='center'>舉例說明 :</h3><table align='center' style='text-align: center;''><tr><td align='left' colspan='5'>該產品價格：5</td><tr><td>｜折讓等級</td><td>｜訂購產品的數量範圍(小)</td><td>｜訂購產品的數量範圍(大)</td><td>｜折扣(幾折)</td><td>｜優惠價</td><tr><td>1</td><td>0</td><td>999</td><td>0</td><td>5</td><tr><td>2</td><td>1000</td><td>2499</td><td>97</td><td>4.85</td><tr><td>3</td><td>2500</td><td></td><td>95</td><td>4.75</td><tr><td colspan='5'>沒有打折,折扣填0</td><tr><td colspan='5'>系統將自動轉換優惠價→折扣</td></table>";
+            var re = re +"<tr><td colspan='3'></td><td colspan='2'><button id='eoqd2_submits'>送出</button></td></table><br /><br />";
             $('#eoqd_list2').append(re);
+
             return false;
         });
+    $('#eoqd_list2').on('click','#eoqd2_submits',function(){
+        var re = "<table align='center' style='text-align:center;'><form id='eoqd_forms2'><tr><td><font size='5' color='#624d48'>現在請您輸入以下資料</font></td><tr><td>年需求量：<input type ='text' id='demands2' size='10'></td><tr><td>訂購成本：<input type ='text' id='cos2' size='10'></td><tr><td>持有成本率（幾成）：<input type ='text' id='chs2' size='10' placeholder='1-10'></td><tr><td><button id='eoqd3_submits'>送出</button></table><br /><br />"
+        $('#eoqd_list2').append(re);
+        if ($('#dis1').val() == '') {
+            for (var i= 1; i <=  parseInt($('#discounts').val()); i++) {
+                if ($('#disprice'+i).val() == $('#price').val()) {
+                    $('#dis'+i).val('0');
+                } else {
+                    $('#dis'+i).val((parseInt($('#disprice'+i).val()) / parseInt($('#price').val())) *100);
+                    for (var j = 1; j <=10; j++) {
+                        if (parseInt($('#dis'+i).val()) == (j*10)) {
+                            $('#dis'+i).val(j);
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    });
+    $('#eoqd_list2').on('click','#eoqd3_submits',function() {
+        var sp = new Array(parseInt($('#discounts').val()));
+        var qu = new Array(parseInt($('#discounts').val()));
+        var re = "<table align = 'center' width='60%'><tr><td colspan = '3'></td>";
+        for (var i = 1; i <= parseInt($('#discounts').val()); i++) {
+            var j = i-1;
+            switch ($('#dis'+i).val()) {
+                case '0':
+                    sp[j] = parseInt($('#price').val());
+                    break;
+                case '9':
+                    sp[j] = parseInt($('#price').val()) * 0.9;
+                    break;
+                case '8':
+                    sp[j] = parseInt($('#price').val()) * 0.8;
+                    break;
+                case '7':
+                    sp[j] = parseInt($('#price').val()) * 0.7;
+                    break;
+                case '6':
+                    sp[j] = parseInt($('#price').val()) * 0.6;
+                    break;
+                case '5':
+                    sp[j] = parseInt($('#price').val()) * 0.5;
+                    break;
+                case '4':
+                    sp[j] = parseInt($('#price').val()) * 0.4;
+                    break;
+                case '3':
+                    sp[j] = parseInt($('#price').val()) * 0.3;
+                    break;
+                case '2':
+                    sp[j] = parseInt($('#price').val()) * 0.2;
+                    break;
+                case '1':
+                    sp[j] = parseInt($('#price').val()) * 0.1;
+                    break;
+                default:
+                 sp[j] = (parseInt($('#price').val()) * parseInt($('#dis'+i).val()) * 0.01).toFixed(2); 
+            }
+        }
+        var ch = parseInt($('#chs2').val()) *10;
+        var demand = parseInt($('#demands2').val());
+        var co = parseInt($('#cos2').val());
+        for (var i = 1 ; i <= parseInt($('#discounts').val()) ; i++) {
+            var j= i-1;
+            var count_eoqd = (2 * demand * co) / (( ch / 100) * sp[j] );
+            qu[j] = Math.round(Math.sqrt(count_eoqd));
+            re =  re +"<tr><td colspan='2' align='center' width='40%'>Q"+i+"* = "+qu[j]+"</td>";
+        }
+
+        var tc = new Array(parseInt($('#discounts').val()));
+        var tcq = new Array(parseInt($('#discounts').val()));
+        var tcd = new Array(parseInt($('#discounts').val()));
+        var tcp = new Array(parseInt($('#discounts').val()));
+
+        for (var i = 1 ; i <= parseInt($('#discounts').val()) ; i++) {
+            var j = i+1;
+            var l = i-1;
+            if (qu[l] < parseInt($('#range1s'+i).val())) {
+                qu[l] = parseInt($('#range1s'+i).val());
+              re = re +"<tr><td align = 'center' colspan='1'> 由於Q"+i+"* 小於最小數量"+$('#range1s'+i).val()+" , Q"+i+"* = "+$('#range1s'+(i)).val()+"</td>";
+            } else if (qu[l] >=parseInt($('#range1s'+j).val())) {
+                re= re+"<tr><td align = 'center'> 由於Q"+i+"* 大於下一層級的最小數量"+$('#range1s'+j).val()+", Q"+i+"* 不會是最佳解</td>";
+            }
+
+            tc[l] = Math.round(( ( qu[l] / 2) * ((ch/100) * sp[l]) ) + ( (demand / qu[l]) * co) + (((demand / qu[l])* sp[l]) * qu[l]));
+            tcq[l] = Math.round( (qu[l] / 2) * ((ch/100) * sp[l]) );
+            tcd[l] = Math.round( (demand / qu[l]) * co);
+            tcp[l] = Math.round(((demand / qu[l])* sp[l]) * qu[l]);
+        }
+
+        re = re+"</table><br><br><br><h3 align='center'> EOQ數量折扣模式的總成本計算 </h3><table align= 'center'  width='60%' ><tr><td colspan='3'></td><td align = 'center' colspan= '4'>年成本</td></tr><tr><td align = 'center'>折讓等級</td><td align = 'center'>單價</td><td align = 'center'>訂購量</td><td align = 'center'>持有</td><td align = 'center'>訂購</td><td align = 'center'>採購</td><td align = 'center'>合計</td></tr>";
+
+        var a = tc[0];
+        for(var m = 0 ; m < parseInt($('#discounts').val()) ; m++){
+            var n= m + 1;
+            re = re+"<tr><td align='center'>"+n+"</td><td align='center'>"+sp[m]+"</td><td align='center'>"+qu[m]+"</td><td align='center'>"+tcq[m]+"</td><td align='center'>"+tcd[m]+"</td><td align='center'>"+tcp[m]+"</td><td align='center'>"+tc[m]+"</td>";
+            if (a > tc[m]) {
+                a = tc[m];
+            }
+        }
+        re = re +"  <tr><td align = 'center' colspan = '7'><br><br><br></td><tr><td align = 'center' colspan = '7'><h3>最划算的方案如下:</h3></td>";
+
+        for(var m = 0 ; m < parseInt($('#discounts').val()) ; m++){
+            var n= m + 1;
+            if (a == tc[m]) {
+                re = re+"<tr><td colspan='3'></td><td align = 'center' colspan= '4'>年成本</td></tr><tr><td align = 'center'>折讓等級</td><td align = 'center'>單價</td><td align = 'center'>訂購量</td><td align = 'center'>持有</td><td align = 'center'>訂購</td><td align = 'center'>採購</td><td align = 'center'>合計</td></tr><tr><td align='center'>"+n+"</td><td align='center'>"+sp[m]+"</td><td align='center'>"+qu[m]+"</td><td align='center'>"+tcq[m]+"</td><td align='center'>"+tcd[m]+"</td><td align='center'>"+tcp[m]+"</td><td align='center'>"+tc[m]+"</td>";
+            }
+        }
+        re = re +"</table>";
+
+        $('#eoqd_list2').html(re);
+
+        return false;
+    });
+
+    $('#conpssubmit').click(function(){
+             $.ajax({
+                url: 'http://buytogether/eoq/conps',
+                data: $('#conpsforms').serialize(),
+                type:"POST",
+                dataType:'text',
+
+                success: function(msg){
+                    var re = "<legend>您輸入的資料如下</legend>";
+                    $('#conps_main').html(re);
+                },
+
+                 error:function(xhr, ajaxOptions, thrownError){ 
+                    alert(xhr.status); 
+                    alert(thrownError); 
+                 }
+            });
+            return false;
+        })
 
         // $('body div .sel').val('');
         // $('body div .sel').click()

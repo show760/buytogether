@@ -69,5 +69,6 @@ $mux->any('/thread/editpost/:pid',['BuyTogether\Controller\PostController','edit
 );
 /* Eoq */
 $mux->get('/eoq',['BuyTogether\Controller\EoqController','eoqIntroduce']);
+$mux->post('/eoq/conps',['BuyTogether\Controller\EoqController','conps']);
 
 return $mux;

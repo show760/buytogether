@@ -80,7 +80,7 @@ class PostController extends Seed
                 $msg = array(
                     'status' => true,
                     'string' => '刪除留言成功',
-                    'buy.token' => $threadplus->getBid()
+                    'token' => $threadplus->getBid()
                 );
             } else {
                 $msg = array(

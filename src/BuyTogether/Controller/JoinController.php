@@ -43,6 +43,12 @@ class JoinController extends seed
                 if ($n > $buy->getQuantity()) {
                     throw new Exception('剩餘數量不足，請重新選擇數量！');
                 }
+                if ($buy->getConrun() < $user->getRun()) {
+                    throw new Exception('跑團次數過多，禁止加入該團購！');
+                }
+                if ($buy->getConjoin() > $user->getJoin()) {
+                    throw new Exception('參加團購次數不足，禁止加入該團購！');
+                }
                 $join = Join::create($buy, $user, $_POST['quantity']);
                 if (!$join instanceof Join) {
                     throw new Exception('參與團購失敗，請再試一次！');

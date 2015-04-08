@@ -3,6 +3,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Buytogether</title>
+	    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/flatly/bootstrap.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 {% if status == true and string %}
     <script language="JavaScript">
         alert('{{string}}')
@@ -32,27 +36,34 @@ body{
 <div>{{ include('top.html') }}</div>
 </table>
 <hr>
-<table align="center">
-	<form action="/user/login" method="POST">
-		<tr>
-			<td>
-				信箱：
-			</td>
-			<td>
-				<input type="text" name="email" size="20">
-			</td>
-		<tr>
-			<td>
-				密碼：
-			</td>
-			<td>
-				<input type="password" name="pass" size="20">
-			</td>
-		<tr>
-			<td align="center" colspan="2">
-				<input type="submit" name="登入">
-			</td>
-	</form>
-</table>
+<div class="col-md-3"></div>
+<div class="col-md-6">
+    <div class=" well bs-component">
+        <form class="form-horizontal" action="/user/login" method="POST">
+          <fieldset>
+            <legend>登入</legend>
+            <div class="form-group">
+              <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+              <div class="col-lg-10">
+                <input type="text" class="form-control" name="email" placeholder="Email">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword" class="col-lg-2 control-label">密碼</label>
+              <div class="col-lg-10">
+                <input type="password" class="form-control" name="pass" placeholder="Password">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <button type="reset" class="btn btn-default">重新填寫</button>
+                <button type="submit" class="btn btn-primary">確認送出</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+    </div>
+</div>
+<div class="col-md-3"></div>
 </body>
 </html>

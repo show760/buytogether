@@ -20,7 +20,7 @@ body{
 <table align='center'>
     <tr>
         <td>
-            <font id="eoq" color="green"><u>最小年總成本訂購量</u></font>｜<font id="eoqp" color="green"><u>經濟生產批量</u></font>｜<font id="eoqd" color="green"><u>數量折扣</u></font>｜<font id="conps" color="green"><u>隨機需求單一週期存貨模式</u></font>
+            <span id="eoq" color="green"><u>最小年總成本訂購量</u></span>｜<span id="eoqp" color="green"><u>經濟生產批量</u></span>｜<span id="eoqd" color="green"><u>數量折扣</u></span>｜<span id="conps" color="green"><u>隨機需求單一週期存貨模式</u></span>
         </td>
     </tr>
 </table>
@@ -29,7 +29,7 @@ body{
 <table align='center' style='background:rgba(255, 255, 255, .5); filter: progid: DXImageTransform.Microsoft.gradient (startcolorstr=#7fffffff, endcolorstr=#7fffffff); padding:10px; width: 90%; border: 0px solid #624d48; text-align:left; '>
     <tr>
         <td colspan="3" align="center">
-            <font color="624d48" size="4">透過上面四種計算方式，能於各種情境下幫助團主找出最合適的訂購數量。</font><br /><br /><br />
+            <span color="624d48" size="4">透過上面四種計算方式，能於各種情境下幫助團主找出最合適的訂購數量。</span><br /><br /><br />
         </td>
     <tr align="center">
         <td style="width: 33%;" >
@@ -52,8 +52,8 @@ body{
                     <h3 align='center'>計算最小年總成本訂購量</h3>
                     <form id='forms'>
                         <div>需求數量(D)&nbsp;&nbsp;：<input id='demand' type ='text' size='10'></div>
-                        <div>訂購成本(Co)：<input id='cos' type ='text' size='10'><font id='countco' color='624d48'>預估訂購成本</font></div>
-                        <div>持有成本(Ch)：<input id='chs' type ='text' size='10'><font id='countch' color='624d48'>預估持有成本</font></div>
+                        <div>訂購成本(Co)：<input id='cos' type ='text' size='10'><span id='countco' color='624d48'>預估訂購成本</span></div>
+                        <div>持有成本(Ch)：<input id='chs' type ='text' size='10'><span id='countch' color='624d48'>預估持有成本</span></div>
                         <div align='center'><button id='eoq_submits'>送出</button></div>
                     </form><br /><br />
                 </div>
@@ -61,8 +61,8 @@ body{
                 <h3 align='center'>計算經濟生產批量</h3>
                     <form id='eoqp_forms'>
                         <div>年需求量(D)&nbsp;&nbsp;：<input type ='text' id='demands1' size='10'></div>
-                        <div>訂購成本(Co)：<input id='cos1' type ='text' size='10'><font id='countco1' color='624d48'>預估訂購成本</font></div>
-                        <div>持有成本(Ch)：<input id='chs1' type ='text' size='10'><font id='countch1' color='624d48'>預估持有成本</font></div>
+                        <div>訂購成本(Co)：<input id='cos1' type ='text' size='10'><span id='countco1' color='624d48'>預估訂購成本</span></div>
+                        <div>持有成本(Ch)：<input id='chs1' type ='text' size='10'><span id='countch1' color='624d48'>預估持有成本</span></div>
                         <div>團購廠商的年生產量(P)：<input type ='text' id='ps1' size='10'></div>
                         <div align='center'><button id='eoqp_submits'>送出</button></div>
                     </form><br /><br />
